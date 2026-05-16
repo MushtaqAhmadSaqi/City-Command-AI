@@ -33,8 +33,14 @@
   - Mobile: src/screens (13 files), components (7 files), navigation, services, store, types ✅
   - Docs folder ✅
   - requirements.txt ✅
-- [ ] **Step 3:** Set up FastAPI backend foundation
-- [ ] **Step 4:** Set up React Native Expo mobile foundation
+- [x] **Step 3:** Set up FastAPI backend foundation
+  - Created `main.py` with CORS, app lifespan, and router mounting ✅
+  - Created `data_store.py` (in-memory state for demo) ✅
+  - Created stubs for all 9 API route modules ✅
+- [x] **Step 4:** Set up React Native Expo mobile foundation
+  - Created `package.json` with Expo, React Navigation, NativeWind dependencies ✅
+  - Created `app.json`, `babel.config.js`, `tailwind.config.js`, `tsconfig.json` ✅
+  - Created `App.tsx` and basic `AppNavigator.tsx` shell ✅
 
 ### Data & Contracts Phase
 
@@ -94,8 +100,12 @@
 | 1 | All 6 control files created, roadmap complete | ✅ Pass |
 | 2 | Full monorepo tree: 8 routes, 11 agents, 5 services, 13 screens, 7 components | ✅ Pass |
 
+| 3 | Created `main.py`, `data_store.py`, and 9 route stubs | ✅ Pass |
+
+| 4 | Mobile Expo foundation configured with NativeWind | ✅ Pass |
+
 ---
 
 ## Next Recommended Step
 
-**Step 3:** Set up FastAPI backend foundation — awaiting `NEXT STEP` instruction.
+**Step 5:** Create shared data contracts and TypeScript type definitions — awaiting `NEXT STEP` instruction.
