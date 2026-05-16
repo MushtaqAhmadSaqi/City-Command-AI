@@ -1,4 +1,5 @@
 export type RootStackParamList = {
+  Splash: undefined;
   MainTabs: undefined;
   IncidentDetail: { incidentId: string };
   AIAnalysis: { incidentId: string };

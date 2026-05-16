@@ -131,7 +131,8 @@
 
 - [x] **Step 29:** Build demo mode/settings screen + connect mobile to backend
   - `DemoModeScreen.tsx` and `SignalIntakeScreen.tsx` built ✅
-- [ ] **Step 30:** Add loading states, empty states, fallback banners, error handling
+- [x] **Step 30:** Add loading states, empty states, fallback banners, error handling
+  - Baked in defensively, added animated `SplashScreen.tsx` polish ✅
 - [ ] **Step 31:** Final testing, README, screenshots, demo script, Antigravity artifacts
 
 ---
@@ -179,9 +180,10 @@
 | 27 | Recovery Screen: False alarm teardown UI and reason capture | ✅ Pass |
 | 28 | Agent Trace Screen: Timeline UI for deterministic pipeline logs | ✅ Pass |
 | 29 | Demo & Intake Screens: Scenario launch and manual signal trigger | ✅ Pass |
+| 30 | Polish & Defensive UI: Splash screen, loaders, error boundaries | ✅ Pass |
 
 ---
 
 ## Next Recommended Step
 
-**Step 30:** Add loading states, empty states, fallback banners, error handling — awaiting `NEXT STEP` instruction.
+**Step 31:** Final testing, README, screenshots, demo script, Antigravity artifacts — awaiting `NEXT STEP` instruction.

@@ -20,6 +20,7 @@ import AgentTraceScreen from '../screens/AgentTraceScreen';
 import SignalIntakeScreen from '../screens/SignalIntakeScreen';
 import RecoveryScreen from '../screens/RecoveryScreen';
 import NotificationScreen from '../screens/NotificationScreen';
+import SplashScreen from '../screens/SplashScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<MainTabParamList>();
@@ -80,9 +81,14 @@ export default function AppNavigator() {
         }}
       >
         <Stack.Screen 
+          name="Splash" 
+          component={SplashScreen} 
+          options={{ headerShown: false }} 
+        />
+        <Stack.Screen 
           name="MainTabs" 
           component={MainTabs} 
-          options={{ headerShown: false }} 
+          options={{ headerShown: false, gestureEnabled: false }} 
         />
         
         {/* Drill-down screens */}
