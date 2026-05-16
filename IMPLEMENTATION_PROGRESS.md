@@ -124,7 +124,8 @@
   - `NotificationScreen.tsx` built with draft/approve/send workflow ✅
 - [x] **Step 27:** Build recovery screen
   - `RecoveryScreen.tsx` built with rollback workflow ✅
-- [ ] **Step 28:** Build agent trace screen
+- [x] **Step 28:** Build agent trace screen
+  - `AgentTraceScreen.tsx` built with timeline visualization ✅
 
 ### Integration & Polish Phase
 
@@ -175,9 +176,10 @@
 | 25 | Simulation Screen: Sandbox for interventions and side effects | ✅ Pass |
 | 26 | Notification Screen: Draft, review, and dispatch targeted messages | ✅ Pass |
 | 27 | Recovery Screen: False alarm teardown UI and reason capture | ✅ Pass |
+| 28 | Agent Trace Screen: Timeline UI for deterministic pipeline logs | ✅ Pass |
 
 ---
 
 ## Next Recommended Step
 
-**Step 28:** Build agent trace screen — awaiting `NEXT STEP` instruction.
+**Step 29:** Build demo mode/settings screen + connect mobile to backend — awaiting `NEXT STEP` instruction.
