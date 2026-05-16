@@ -44,7 +44,9 @@
 
 ### Data & Contracts Phase
 
-- [ ] **Step 5:** Create shared data contracts and TypeScript type definitions
+- [x] **Step 5:** Create shared data contracts and TypeScript type definitions
+  - Populated `mobile/src/types/index.ts` with all core interfaces ✅
+  - Types included: `Signal`, `Incident`, `Resource`, `Simulation`, `AgentTrace`, etc. ✅
 - [ ] **Step 6:** Create seed scenario JSON for G-10 flood + heat emergency
 - [ ] **Step 7:** Build backend Pydantic models and in-memory data layer
 
@@ -103,9 +105,10 @@
 | 3 | Created `main.py`, `data_store.py`, and 9 route stubs | ✅ Pass |
 
 | 4 | Mobile Expo foundation configured with NativeWind | ✅ Pass |
+| 5 | Shared TypeScript types match API contracts | ✅ Pass |
 
 ---
 
 ## Next Recommended Step
 
-**Step 5:** Create shared data contracts and TypeScript type definitions — awaiting `NEXT STEP` instruction.
+**Step 6:** Create seed scenario JSON for G-10 flood + heat emergency — awaiting `NEXT STEP` instruction.
