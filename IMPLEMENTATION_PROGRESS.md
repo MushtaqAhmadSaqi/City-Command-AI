@@ -120,7 +120,8 @@
   - `ResourceAllocationScreen.tsx` built with dispatch triggers and trade-off notes ✅
 - [x] **Step 25:** Build simulation screen
   - `SimulationScreen.tsx` built with action selection and impact visualization ✅
-- [ ] **Step 25:** Build notification screen
+- [x] **Step 26:** Build notification screen
+  - `NotificationScreen.tsx` built with draft/approve/send workflow ✅
 - [ ] **Step 26:** Build recovery screen
 - [ ] **Step 27:** Build agent trace screen
 
@@ -171,9 +172,10 @@
 | 23 | AI Analysis Screen: Credibility & classification visualization | ✅ Pass |
 | 24 | Resource Allocation Screen: Trigger dispatch, release, trade-offs | ✅ Pass |
 | 25 | Simulation Screen: Sandbox for interventions and side effects | ✅ Pass |
+| 26 | Notification Screen: Draft, review, and dispatch targeted messages | ✅ Pass |
 
 ---
 
 ## Next Recommended Step
 
-**Step 26:** Build notification screen — awaiting `NEXT STEP` instruction.
+**Step 27:** Build recovery screen — awaiting `NEXT STEP` instruction.
