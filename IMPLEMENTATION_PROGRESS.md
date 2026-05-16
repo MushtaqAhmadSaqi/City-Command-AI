@@ -93,7 +93,9 @@
 - [x] **Step 15:** Build simulation service
   - `agents/simulation.py` — 8 action types, before/after state, deltas, side effects, cost, risk ✅
   - `routes/simulations.py` — run + get + list-actions endpoints ✅
-- [ ] **Step 16:** Build notification draft service
+- [x] **Step 16:** Build notification draft service
+  - `agents/notification.py` — drafts for 7 audiences, human-review logic ✅
+  - `routes/notifications.py` — endpoints for drafting and approval flow ✅
 - [ ] **Step 17:** Build false alarm recovery service
 - [ ] **Step 18:** Build agent trace and audit log system
 
@@ -146,9 +148,10 @@
 | 13 | Severity agent: vulnerability lookup, sensor adjustments, spread risk | ✅ Pass |
 | 14 | Resource allocation: ETA matrix, trade-off notes, full route API | ✅ Pass |
 | 15 | Simulation agent: 8 actions, before/after, deltas, side effects, cost | ✅ Pass |
+| 16 | Notification agent: 7 audiences, approval gates, draft/send flow | ✅ Pass |
 
 ---
 
 ## Next Recommended Step
 
-**Step 16:** Build notification draft service — awaiting `NEXT STEP` instruction.
+**Step 17:** Build false alarm recovery service — awaiting `NEXT STEP` instruction.
