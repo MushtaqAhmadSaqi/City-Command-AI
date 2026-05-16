@@ -118,7 +118,8 @@
   - `AIAnalysisScreen.tsx` built with progress bars and alerts ✅
 - [x] **Step 24:** Build resource allocation screen
   - `ResourceAllocationScreen.tsx` built with dispatch triggers and trade-off notes ✅
-- [ ] **Step 24:** Build simulation screen
+- [x] **Step 25:** Build simulation screen
+  - `SimulationScreen.tsx` built with action selection and impact visualization ✅
 - [ ] **Step 25:** Build notification screen
 - [ ] **Step 26:** Build recovery screen
 - [ ] **Step 27:** Build agent trace screen
@@ -169,9 +170,10 @@
 | 22 | Incidents list and detail screens: Nav Hub | ✅ Pass |
 | 23 | AI Analysis Screen: Credibility & classification visualization | ✅ Pass |
 | 24 | Resource Allocation Screen: Trigger dispatch, release, trade-offs | ✅ Pass |
+| 25 | Simulation Screen: Sandbox for interventions and side effects | ✅ Pass |
 
 ---
 
 ## Next Recommended Step
 
-**Step 25:** Build simulation screen — awaiting `NEXT STEP` instruction.
+**Step 26:** Build notification screen — awaiting `NEXT STEP` instruction.
