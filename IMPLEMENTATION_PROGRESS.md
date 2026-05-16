@@ -56,7 +56,11 @@
 
 ### Backend Core Phase
 
-- [ ] **Step 8:** Build demo scenario endpoint (`POST /demo/run-scenario`)
+- [x] **Step 8:** Build demo scenario endpoint (`POST /demo/run-scenario`)
+  - Full 11-agent pipeline runs in one call ✅
+  - Produces: 2 incidents, 12 traces, 7 notifications, 7 resource assignments, 2 simulations ✅
+  - Alternate hypothesis flagged for G-10 (water-main burst 41%) ✅
+  - Trade-off note: ALS diverted from G-10 to F-11 CRITICAL ✅
 - [ ] **Step 9:** Build signal ingestion endpoints (`POST/GET /signals`)
 - [ ] **Step 10:** Build incident endpoints (`GET /incidents`, `GET /incidents/{id}`)
 - [ ] **Step 11:** Build deterministic agent orchestrator
@@ -112,9 +116,10 @@
 | 5 | Shared TypeScript types match API contracts | ✅ Pass |
 | 6 | Seed JSON contains G-10 and F-11 data with resources | ✅ Pass |
 | 7 | Pydantic models cover all 16 entities; seed loader tested | ✅ Pass |
+| 8 | `/demo/run-scenario` produces 2 incidents, 12 traces, 7 notifications | ✅ Pass |
 
 ---
 
 ## Next Recommended Step
 
-**Step 8:** Build demo scenario endpoint (`POST /demo/run-scenario`) — awaiting `NEXT STEP` instruction.
+**Step 9:** Build signal ingestion endpoints (`POST/GET /signals`) — awaiting `NEXT STEP` instruction.
