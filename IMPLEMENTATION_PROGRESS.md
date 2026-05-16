@@ -96,7 +96,9 @@
 - [x] **Step 16:** Build notification draft service
   - `agents/notification.py` — drafts for 7 audiences, human-review logic ✅
   - `routes/notifications.py` — endpoints for drafting and approval flow ✅
-- [ ] **Step 17:** Build false alarm recovery service
+- [x] **Step 17:** Build false alarm recovery service
+  - `agents/recovery.py` — handles teardown, resource release, notification retraction ✅
+  - `routes/recovery.py` — `POST /recovery/{id}/false-alarm` endpoint ✅
 - [ ] **Step 18:** Build agent trace and audit log system
 
 ### Mobile UI Phase
@@ -149,9 +151,10 @@
 | 14 | Resource allocation: ETA matrix, trade-off notes, full route API | ✅ Pass |
 | 15 | Simulation agent: 8 actions, before/after, deltas, side effects, cost | ✅ Pass |
 | 16 | Notification agent: 7 audiences, approval gates, draft/send flow | ✅ Pass |
+| 17 | False alarm recovery agent: teardown, release resources, trace | ✅ Pass |
 
 ---
 
 ## Next Recommended Step
 
-**Step 17:** Build false alarm recovery service — awaiting `NEXT STEP` instruction.
+**Step 18:** Build agent trace and audit log system — awaiting `NEXT STEP` instruction.
