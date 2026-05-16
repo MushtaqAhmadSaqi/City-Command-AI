@@ -352,3 +352,105 @@ async def update_incident_status(incident_id: str, body: StatusUpdate):
         "message": f"Status updated: {old_status} → {body.status}",
         "timestamp": _now(),
     }
+
+
+# ─────────────────────────────────────────────────
+# GET /incidents/{incident_id}/ai-analysis
+# ─────────────────────────────────────────────────
+@router.get("/{incident_id}/ai-analysis")
+async def get_ai_analysis(incident_id: str):
+    """
+    Return a full AI analysis breakdown for the mobile AI Analysis screen.
+
+    Includes:
+      - credibility confidence score with all 9 factors
+      - priority score with 6-factor breakdown
+      - classification primary + alternates + evidence keywords
+      - human_review_required flag
+      - relevant agent traces
+    """
+    incident = data_store.incidents.get(incident_id)
+    if not incident:
+        raise HTTPException(status_code=404, detail=f"Incident '{incident_id}' not found")
+
+    from app.services.scoring import (
+        CredibilityInput, score_credibility,
+        PriorityInput, score_priority,
+        classify_signals,
+    )
+
+    signals = [
+        s for s in data_store.signals
+        if s["id"] in incident.get("signal_ids", [])
+    ]
+
+    source_types = list({s.get("source_type", "social") for s in signals})
+    has_urgency  = any((s.get("metadata") or {}).get("urgency") in ("high", "critical") for s in signals)
+    has_media    = any((s.get("metadata") or {}).get("media_attached") for s in signals)
+    confidence   = incident.get("confidence", 0.70)
+
+    # ── Credibility score breakdown ───────────────────
+    cred_input = CredibilityInput(
+        source_types=source_types,
+        signal_count=len(signals),
+        geo_confidence=incident.get("location", {}).get("radius_m", 500) / 2000 if incident.get("location") else 0.70,
+        has_urgency=has_urgency,
+        arrival_rate=len(signals) / 10.0,
+        has_media=has_media,
+        has_contradiction=len(incident.get("alternate_hypotheses", [])) > 0,
+        max_signal_age_min=10.0,
+        independent_sources=len(source_types),
+    )
+    cred_result = score_credibility(cred_input)
+
+    # ── Priority score breakdown ──────────────────────
+    sev_pred = data_store.severity_predictions.get(incident_id, {})
+    priority_input = PriorityInput(
+        severity=incident.get("severity", "MEDIUM"),
+        confidence=confidence,
+        vulnerability_score=sev_pred.get("vulnerability_score", 0.62),
+        affected_population=incident.get("affected_population_estimate", 1000),
+        city_population=2_000_000,
+        speed_of_onset=0.85,
+        resources_available=0.60,
+    )
+    priority_result = score_priority(priority_input)
+
+    # ── Classification breakdown ──────────────────────
+    cls_result = classify_signals(signals, confidence)
+
+    # ── Relevant traces ───────────────────────────────
+    relevant_traces = [
+        t for t in data_store.traces
+        if t.get("incident_id") == incident_id
+        or t.get("agent_name") in ("CredibilityScoringAgent", "ClassificationAgent", "SeverityPredictionAgent")
+    ][:10]
+
+    return {
+        "success": True,
+        "data": {
+            "incident_id":    incident_id,
+            "title":          incident.get("title"),
+            "credibility": {
+                "confidence":       cred_result.confidence,
+                "raw_score":        cred_result.raw_score,
+                "factors":          cred_result.factors,
+                "weights":          cred_result.weights,
+                "weighted":         cred_result.weighted,
+                "dominant_penalty": cred_result.dominant_penalty,
+            },
+            "priority": priority_result,
+            "classification": {
+                "primary_type":          cls_result.primary_type,
+                "sub_type":              cls_result.sub_type,
+                "primary_score":         cls_result.primary_score,
+                "alternate_hypotheses":  cls_result.alternate_hypotheses,
+                "human_review_required": cls_result.human_review_required,
+                "evidence_keywords":     cls_result.evidence_keywords,
+                "confidence_gap":        cls_result.confidence_gap,
+            },
+            "human_review_required": incident.get("human_review_required", False),
+            "traces": relevant_traces,
+        },
+        "timestamp": _now(),
+    }

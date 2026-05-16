@@ -75,7 +75,11 @@
   - `agents/orchestrator.py` — 6-stage pipeline: intake→clean→geo→credibility→classify→severity ✅
   - Every stage writes a trace entry with fallback detection ✅
   - `POST /pipeline/run` wired in `main.py` for live signal triggers ✅
-- [ ] **Step 12:** Build credibility scoring and crisis classification logic
+- [x] **Step 12:** Build credibility scoring and crisis classification logic
+  - `services/scoring.py` — 9-factor credibility formula, 6-factor priority, keyword classifier ✅
+  - `agents/credibility.py` — agent wrapper with trace logging ✅
+  - `agents/classification.py` — agent wrapper with alternate hypotheses + review gate ✅
+  - `GET /incidents/{id}/ai-analysis` endpoint for AI Analysis screen ✅
 - [ ] **Step 13:** Build severity prediction and priority scoring
 
 ### Backend Advanced Phase
@@ -131,9 +135,10 @@
 | 9 | `/signals` POST+GET fully implemented with geocoding + audit | ✅ Pass |
 | 10 | `/incidents` list+detail+classify+severity+status fully implemented | ✅ Pass |
 | 11 | Agent orchestrator: 6-stage pipeline with traces + fallbacks | ✅ Pass |
+| 12 | Scoring service: 9-factor credibility + priority + classification | ✅ Pass |
 
 ---
 
 ## Next Recommended Step
 
-**Step 12:** Build credibility scoring and crisis classification logic — awaiting `NEXT STEP` instruction.
+**Step 13:** Build severity prediction and priority scoring — awaiting `NEXT STEP` instruction.
