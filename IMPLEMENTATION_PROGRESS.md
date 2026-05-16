@@ -107,7 +107,9 @@
 - [x] **Step 19:** Set up mobile app navigation and routing
   - Implemented bottom tab navigator + stack navigators in `mobile/src/navigation` ✅
   - Connected stub screens (Dashboard, Incidents, Resources, Settings) ✅
-- [ ] **Step 20:** Build home dashboard screen
+- [x] **Step 20:** Connect Zustand store to backend API
+  - Configured `api.ts` with `fetchApi` connecting to `localhost:8000` ✅
+  - Implemented `incidentStore`, `resourceStore`, `signalStore`, `traceStore`, and `demoStore` ✅
 - [ ] **Step 21:** Build incident list and incident detail screens
 - [ ] **Step 22:** Build AI analysis screen
 - [ ] **Step 23:** Build resource allocation screen
@@ -157,9 +159,10 @@
 | 17 | False alarm recovery agent: teardown, release resources, trace | ✅ Pass |
 | 18 | Trace and Audit APIs: sorting, filtering by incident/workflow | ✅ Pass |
 | 19 | Mobile Navigation: Bottom tabs + Native Stack connected to stubs | ✅ Pass |
+| 20 | Zustand Stores: `api.ts` configured, all 5 data stores implemented | ✅ Pass |
 
 ---
 
 ## Next Recommended Step
 
-**Step 20:** Connect Zustand store to backend API — awaiting `NEXT STEP` instruction.
+**Step 21:** Build home dashboard screen — awaiting `NEXT STEP` instruction.
