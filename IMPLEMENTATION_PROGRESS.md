@@ -99,7 +99,8 @@
 - [x] **Step 17:** Build false alarm recovery service
   - `agents/recovery.py` — handles teardown, resource release, notification retraction ✅
   - `routes/recovery.py` — `POST /recovery/{id}/false-alarm` endpoint ✅
-- [ ] **Step 18:** Build agent trace and audit log system
+- [x] **Step 18:** Build agent trace and audit log system
+  - `routes/traces.py` — fully implemented with `GET /traces` and `GET /traces/audit-logs` ✅
 
 ### Mobile UI Phase
 
@@ -152,9 +153,10 @@
 | 15 | Simulation agent: 8 actions, before/after, deltas, side effects, cost | ✅ Pass |
 | 16 | Notification agent: 7 audiences, approval gates, draft/send flow | ✅ Pass |
 | 17 | False alarm recovery agent: teardown, release resources, trace | ✅ Pass |
+| 18 | Trace and Audit APIs: sorting, filtering by incident/workflow | ✅ Pass |
 
 ---
 
 ## Next Recommended Step
 
-**Step 18:** Build agent trace and audit log system — awaiting `NEXT STEP` instruction.
+**Step 19:** Set up mobile app navigation and routing — awaiting `NEXT STEP` instruction.
