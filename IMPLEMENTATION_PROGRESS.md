@@ -80,7 +80,9 @@
   - `agents/credibility.py` — agent wrapper with trace logging ✅
   - `agents/classification.py` — agent wrapper with alternate hypotheses + review gate ✅
   - `GET /incidents/{id}/ai-analysis` endpoint for AI Analysis screen ✅
-- [ ] **Step 13:** Build severity prediction and priority scoring
+- [x] **Step 13:** Build severity prediction and priority scoring
+  - `agents/severity.py` — full agent: vulnerability lookup, sensor adjustments, spread risk ✅
+  - `/incidents/{id}/predict-severity` updated to call real agent + `force_recalculate` flag ✅
 
 ### Backend Advanced Phase
 
@@ -136,9 +138,10 @@
 | 10 | `/incidents` list+detail+classify+severity+status fully implemented | ✅ Pass |
 | 11 | Agent orchestrator: 6-stage pipeline with traces + fallbacks | ✅ Pass |
 | 12 | Scoring service: 9-factor credibility + priority + classification | ✅ Pass |
+| 13 | Severity agent: vulnerability lookup, sensor adjustments, spread risk | ✅ Pass |
 
 ---
 
 ## Next Recommended Step
 
-**Step 13:** Build severity prediction and priority scoring — awaiting `NEXT STEP` instruction.
+**Step 14:** Build resource allocation service — awaiting `NEXT STEP` instruction.

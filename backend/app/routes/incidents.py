@@ -248,11 +248,13 @@ async def classify_incident(incident_id: str, body: ClassifyRequest):
 # ─────────────────────────────────────────────────
 class SeverityRequest(BaseModel):
     include_spread_risk: bool = True
+    force_recalculate:   bool = False
 
 @router.post("/{incident_id}/predict-severity")
 async def predict_severity(incident_id: str, body: SeverityRequest):
     """
     Run or re-run severity prediction on an incident.
+    Calls the real SeverityPredictionAgent with vulnerability lookup.
     Returns the full SeverityPrediction object.
     """
     incident = data_store.incidents.get(incident_id)
@@ -262,52 +264,47 @@ async def predict_severity(incident_id: str, body: SeverityRequest):
     if not incident.get("location"):
         raise HTTPException(status_code=422, detail="Missing location — cannot predict severity")
 
+    # Return existing unless force_recalculate requested
     existing = data_store.severity_predictions.get(incident_id)
-    if existing:
+    if existing and not body.force_recalculate:
         return {
-            "success": True,
-            "data":    existing,
-            "message": "Returning existing severity prediction.",
+            "success":   True,
+            "data":      existing,
+            "message":   "Returning existing severity prediction. Pass force_recalculate=true to refresh.",
             "timestamp": _now(),
         }
 
-    # Derive severity from incident data
-    severity_map = {"CRITICAL": "CRITICAL", "HIGH": "HIGH", "MEDIUM": "MEDIUM", "LOW": "LOW"}
-    severity = severity_map.get(incident.get("severity", "MEDIUM"), "MEDIUM")
+    # Call the real severity agent
+    from app.agents import severity as severity_agent
 
-    prediction = {
-        "id":                  _uid("sev_"),
-        "incident_id":         incident_id,
-        "severity":            severity,
-        "radius_m":            incident["location"].get("radius_m", 500),
-        "population_affected": incident.get("affected_population_estimate", 0),
-        "duration_min":        incident.get("expected_duration_min", 60),
-        "peak_impact_min":     incident.get("peak_impact_min", 30),
-        "spread_risk":         "HIGH" if severity == "CRITICAL" else "MEDIUM",
-        "vulnerability_score": 0.91 if "katchi" in incident.get("location", {}).get("area", "").lower() else 0.62,
-        "confidence":          incident.get("confidence", 0.7),
-        "created_by_agent":    "SeverityPredictionAgent",
-        "created_at":          _now(),
-    }
-    data_store.severity_predictions[incident_id] = prediction
+    signals = [
+        s for s in data_store.signals
+        if s["id"] in incident.get("signal_ids", [])
+    ]
+    wf_id      = _uid("wf_")
+    area_text  = incident.get("location", {}).get("area", "")
+    crisis_type = incident.get("primary_type", "unknown")
+    confidence  = incident.get("confidence", 0.65)
 
-    wf_id = _uid("wf_")
-    _trace(
-        wf_id, incident_id,
-        "SeverityPredictionAgent", "predict_on_demand",
-        f"Severity prediction requested. include_spread_risk={body.include_spread_risk}",
-        f"Severity: {severity}. Radius: {prediction['radius_m']}m. "
-        f"Population: {prediction['population_affected']}. "
-        f"Spread risk: {prediction['spread_risk']}.",
-        tool_calls=["predict_severity()", "estimate_population()", "score_vulnerability()"],
-        duration_ms=55,
+    prediction = severity_agent.run(
+        workflow_id=wf_id,
+        incident_id=incident_id,
+        crisis_type=crisis_type,
+        confidence=confidence,
+        area_text=area_text,
+        signals=signals,
     )
 
+    # Sync severity back to the incident
+    data_store.incidents[incident_id]["severity"]    = prediction["severity"]
+    data_store.incidents[incident_id]["updated_at"]  = _now()
+
     return {
-        "success": True,
-        "data":    prediction,
+        "success":   True,
+        "data":      prediction,
         "timestamp": _now(),
-        "trace_id":  data_store.traces[-1]["id"],
+        "trace_id":  prediction.get("trace_id"),
+
     }
 
 
