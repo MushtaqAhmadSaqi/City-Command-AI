@@ -61,7 +61,10 @@
   - Produces: 2 incidents, 12 traces, 7 notifications, 7 resource assignments, 2 simulations ✅
   - Alternate hypothesis flagged for G-10 (water-main burst 41%) ✅
   - Trade-off note: ALS diverted from G-10 to F-11 CRITICAL ✅
-- [ ] **Step 9:** Build signal ingestion endpoints (`POST/GET /signals`)
+- [x] **Step 9:** Build signal ingestion endpoints (`POST/GET /signals`)
+  - `POST /signals` — validates, normalizes, geocodes, stores + audit+trace ✅
+  - `GET /signals` — filter by source_type, paginated ✅
+  - `GET /signals/{id}` — single signal lookup ✅
 - [ ] **Step 10:** Build incident endpoints (`GET /incidents`, `GET /incidents/{id}`)
 - [ ] **Step 11:** Build deterministic agent orchestrator
 - [ ] **Step 12:** Build credibility scoring and crisis classification logic
@@ -117,9 +120,10 @@
 | 6 | Seed JSON contains G-10 and F-11 data with resources | ✅ Pass |
 | 7 | Pydantic models cover all 16 entities; seed loader tested | ✅ Pass |
 | 8 | `/demo/run-scenario` produces 2 incidents, 12 traces, 7 notifications | ✅ Pass |
+| 9 | `/signals` POST+GET fully implemented with geocoding + audit | ✅ Pass |
 
 ---
 
 ## Next Recommended Step
 
-**Step 9:** Build signal ingestion endpoints (`POST/GET /signals`) — awaiting `NEXT STEP` instruction.
+**Step 10:** Build incident endpoints (`GET /incidents`, `GET /incidents/{id}`) — awaiting `NEXT STEP` instruction.
