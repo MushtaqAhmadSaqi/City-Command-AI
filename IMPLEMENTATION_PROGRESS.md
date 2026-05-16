@@ -47,7 +47,9 @@
 - [x] **Step 5:** Create shared data contracts and TypeScript type definitions
   - Populated `mobile/src/types/index.ts` with all core interfaces ✅
   - Types included: `Signal`, `Incident`, `Resource`, `Simulation`, `AgentTrace`, etc. ✅
-- [ ] **Step 6:** Create seed scenario JSON for G-10 flood + heat emergency
+- [x] **Step 6:** Create seed scenario JSON for G-10 flood + heat emergency
+  - Created `scenario_g10_heat.json` with 8 diverse signals (social, traffic, weather, calls) ✅
+  - Included 8 resource units (pumps, ambulances, police, cooling tents) ✅
 - [ ] **Step 7:** Build backend Pydantic models and in-memory data layer
 
 ### Backend Core Phase
@@ -106,9 +108,10 @@
 
 | 4 | Mobile Expo foundation configured with NativeWind | ✅ Pass |
 | 5 | Shared TypeScript types match API contracts | ✅ Pass |
+| 6 | Seed JSON contains G-10 and F-11 data with resources | ✅ Pass |
 
 ---
 
 ## Next Recommended Step
 
-**Step 6:** Create seed scenario JSON for G-10 flood + heat emergency — awaiting `NEXT STEP` instruction.
+**Step 7:** Build backend Pydantic models and in-memory data layer — awaiting `NEXT STEP` instruction.

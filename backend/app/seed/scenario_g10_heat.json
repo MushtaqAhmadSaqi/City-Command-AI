@@ -1,4 +1,145 @@
 {
-  "_comment": "Seed scenario data — Implemented in Step 6",
-  "scenario_id": "g10_heat_demo"
+  "scenario_id": "g10_heat_demo",
+  "name": "G-10 Flooding vs F-11 Heat Emergency",
+  "description": "Simultaneous crisis demo: Probable urban flooding in G-10 with a competing alternate hypothesis of a water-main burst, alongside a critical heat emergency in a nearby low-income area.",
+  "signals": [
+    {
+      "source_id": "sig_flood_01",
+      "source_type": "social",
+      "raw_text": "G-10 mein pani bhar gaya hai, gaariyan phans gayi hain",
+      "location_text": "G-10 Islamabad",
+      "timestamp": "2026-05-16T18:05:00Z",
+      "metadata": { "user_reputation": 0.62, "language": "roman_urdu" }
+    },
+    {
+      "source_id": "sig_flood_02",
+      "source_type": "social",
+      "raw_text": "Kashmir highway near G-10 is completely blocked due to heavy water accumulation.",
+      "location_text": "Kashmir Highway G-10",
+      "timestamp": "2026-05-16T18:10:00Z",
+      "metadata": { "user_reputation": 0.85, "media_attached": true }
+    },
+    {
+      "source_id": "sig_flood_03",
+      "source_type": "traffic",
+      "raw_text": "Severe congestion detected, average speed < 5km/h",
+      "location_text": "G-10 Markaz Road",
+      "timestamp": "2026-05-16T18:12:00Z",
+      "metadata": { "sensor_id": "T-45-G10" }
+    },
+    {
+      "source_id": "sig_flood_04",
+      "source_type": "weather",
+      "raw_text": "Localized heavy downpour reported in Sector G",
+      "location_text": "Sector G-10",
+      "timestamp": "2026-05-16T17:50:00Z",
+      "metadata": { "precipitation_mm": 45, "confidence": 0.9 }
+    },
+    {
+      "source_id": "sig_flood_05",
+      "source_type": "calls",
+      "raw_text": "Basement flooded rapidly, water smells like sewage, need help",
+      "location_text": "G-10/4 Service Road",
+      "timestamp": "2026-05-16T18:15:00Z",
+      "metadata": { "urgency": "high" }
+    },
+    {
+      "source_id": "sig_heat_01",
+      "source_type": "social",
+      "raw_text": "Power outage in F-11 slums for 6 hours, kids are getting heatstroke",
+      "location_text": "F-11 Katchi Abadi",
+      "timestamp": "2026-05-16T18:00:00Z",
+      "metadata": { "user_reputation": 0.55 }
+    },
+    {
+      "source_id": "sig_heat_02",
+      "source_type": "calls",
+      "raw_text": "Multiple fainting cases reported due to extreme heat and lack of water",
+      "location_text": "F-11 Area",
+      "timestamp": "2026-05-16T18:20:00Z",
+      "metadata": { "urgency": "critical", "caller_type": "community_leader" }
+    },
+    {
+      "source_id": "sig_heat_03",
+      "source_type": "sensor",
+      "raw_text": "Temperature anomaly: locally exceeds 46C",
+      "location_text": "F-11",
+      "timestamp": "2026-05-16T18:25:00Z",
+      "metadata": { "temp_c": 46.5, "humidity_percent": 80 }
+    }
+  ],
+  "resources": [
+    {
+      "id": "res_pump_01",
+      "resource_type": "drainage_pump",
+      "name": "High Capacity Pump Alpha",
+      "status": "available",
+      "home_lat": 33.684,
+      "home_lng": 73.047,
+      "capacity": 100
+    },
+    {
+      "id": "res_pump_02",
+      "resource_type": "drainage_pump",
+      "name": "Standard Pump Beta",
+      "status": "available",
+      "home_lat": 33.684,
+      "home_lng": 73.047,
+      "capacity": 50
+    },
+    {
+      "id": "res_amb_01",
+      "resource_type": "ambulance",
+      "name": "Ambulance Unit 1 (ALS)",
+      "status": "available",
+      "home_lat": 33.690,
+      "home_lng": 73.050,
+      "capacity": 2
+    },
+    {
+      "id": "res_amb_02",
+      "resource_type": "ambulance",
+      "name": "Ambulance Unit 2 (BLS)",
+      "status": "available",
+      "home_lat": 33.690,
+      "home_lng": 73.050,
+      "capacity": 2
+    },
+    {
+      "id": "res_cop_01",
+      "resource_type": "traffic_police",
+      "name": "Traffic Squad Alpha",
+      "status": "available",
+      "home_lat": 33.680,
+      "home_lng": 73.040,
+      "capacity": 4
+    },
+    {
+      "id": "res_cop_02",
+      "resource_type": "traffic_police",
+      "name": "Traffic Squad Beta",
+      "status": "available",
+      "home_lat": 33.680,
+      "home_lng": 73.040,
+      "capacity": 4
+    },
+    {
+      "id": "res_cool_01",
+      "resource_type": "cooling_center",
+      "name": "Mobile Cooling Tent Unit",
+      "status": "available",
+      "home_lat": 33.670,
+      "home_lng": 73.030,
+      "capacity": 50
+    },
+    {
+      "id": "res_water_01",
+      "resource_type": "water_bowser",
+      "name": "Emergency Water Supply Bowser",
+      "status": "available",
+      "home_lat": 33.670,
+      "home_lng": 73.030,
+      "capacity": 5000
+    }
+  ]
 }
