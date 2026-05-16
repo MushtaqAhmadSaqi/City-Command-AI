@@ -104,7 +104,9 @@
 
 ### Mobile UI Phase
 
-- [ ] **Step 19:** Build mobile navigation, splash, and login screens
+- [x] **Step 19:** Set up mobile app navigation and routing
+  - Implemented bottom tab navigator + stack navigators in `mobile/src/navigation` ✅
+  - Connected stub screens (Dashboard, Incidents, Resources, Settings) ✅
 - [ ] **Step 20:** Build home dashboard screen
 - [ ] **Step 21:** Build incident list and incident detail screens
 - [ ] **Step 22:** Build AI analysis screen
@@ -154,9 +156,10 @@
 | 16 | Notification agent: 7 audiences, approval gates, draft/send flow | ✅ Pass |
 | 17 | False alarm recovery agent: teardown, release resources, trace | ✅ Pass |
 | 18 | Trace and Audit APIs: sorting, filtering by incident/workflow | ✅ Pass |
+| 19 | Mobile Navigation: Bottom tabs + Native Stack connected to stubs | ✅ Pass |
 
 ---
 
 ## Next Recommended Step
 
-**Step 19:** Set up mobile app navigation and routing — awaiting `NEXT STEP` instruction.
+**Step 20:** Connect Zustand store to backend API — awaiting `NEXT STEP` instruction.
