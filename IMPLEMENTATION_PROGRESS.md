@@ -65,7 +65,12 @@
   - `POST /signals` — validates, normalizes, geocodes, stores + audit+trace ✅
   - `GET /signals` — filter by source_type, paginated ✅
   - `GET /signals/{id}` — single signal lookup ✅
-- [ ] **Step 10:** Build incident endpoints (`GET /incidents`, `GET /incidents/{id}`)
+- [x] **Step 10:** Build incident endpoints (`GET /incidents`, `GET /incidents/{id}`)
+  - `GET /incidents` — filter, priority sort, enriched with counts ✅
+  - `GET /incidents/{id}` — full nested detail (signals, assignments, sim, traces) ✅
+  - `POST /incidents/{id}/classify` — on-demand re-classification ✅
+  - `POST /incidents/{id}/predict-severity` — severity prediction ✅
+  - `PATCH /incidents/{id}/status` — operator status update with audit log ✅
 - [ ] **Step 11:** Build deterministic agent orchestrator
 - [ ] **Step 12:** Build credibility scoring and crisis classification logic
 - [ ] **Step 13:** Build severity prediction and priority scoring
@@ -121,9 +126,10 @@
 | 7 | Pydantic models cover all 16 entities; seed loader tested | ✅ Pass |
 | 8 | `/demo/run-scenario` produces 2 incidents, 12 traces, 7 notifications | ✅ Pass |
 | 9 | `/signals` POST+GET fully implemented with geocoding + audit | ✅ Pass |
+| 10 | `/incidents` list+detail+classify+severity+status fully implemented | ✅ Pass |
 
 ---
 
 ## Next Recommended Step
 
-**Step 10:** Build incident endpoints (`GET /incidents`, `GET /incidents/{id}`) — awaiting `NEXT STEP` instruction.
+**Step 11:** Build deterministic agent orchestrator — awaiting `NEXT STEP` instruction.
