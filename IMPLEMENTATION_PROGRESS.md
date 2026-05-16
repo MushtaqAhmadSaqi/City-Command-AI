@@ -112,7 +112,8 @@
   - Implemented `incidentStore`, `resourceStore`, `signalStore`, `traceStore`, and `demoStore` ✅
 - [x] **Step 21:** Build home dashboard screen
   - `HomeDashboardScreen.tsx` built with NativeWind styling and Zustand data binding ✅
-- [ ] **Step 22:** Build AI analysis screen
+- [x] **Step 22:** Build incident list and incident detail screens
+  - `IncidentsScreen.tsx` (filtering, sorting) and `IncidentDetailScreen.tsx` (dashboard, actions) ✅
 - [ ] **Step 23:** Build resource allocation screen
 - [ ] **Step 24:** Build simulation screen
 - [ ] **Step 25:** Build notification screen
@@ -162,9 +163,10 @@
 | 19 | Mobile Navigation: Bottom tabs + Native Stack connected to stubs | ✅ Pass |
 | 20 | Zustand Stores: `api.ts` configured, all 5 data stores implemented | ✅ Pass |
 | 21 | Home Dashboard: Live metrics, top incidents, signal feed | ✅ Pass |
+| 22 | Incidents list and detail screens: Nav Hub | ✅ Pass |
 
 ---
 
 ## Next Recommended Step
 
-**Step 22:** Build incident list and incident detail screens — awaiting `NEXT STEP` instruction.
+**Step 23:** Build AI analysis screen — awaiting `NEXT STEP` instruction.
