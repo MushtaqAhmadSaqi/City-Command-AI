@@ -110,7 +110,8 @@
 - [x] **Step 20:** Connect Zustand store to backend API
   - Configured `api.ts` with `fetchApi` connecting to `localhost:8000` ✅
   - Implemented `incidentStore`, `resourceStore`, `signalStore`, `traceStore`, and `demoStore` ✅
-- [ ] **Step 21:** Build incident list and incident detail screens
+- [x] **Step 21:** Build home dashboard screen
+  - `HomeDashboardScreen.tsx` built with NativeWind styling and Zustand data binding ✅
 - [ ] **Step 22:** Build AI analysis screen
 - [ ] **Step 23:** Build resource allocation screen
 - [ ] **Step 24:** Build simulation screen
@@ -160,9 +161,10 @@
 | 18 | Trace and Audit APIs: sorting, filtering by incident/workflow | ✅ Pass |
 | 19 | Mobile Navigation: Bottom tabs + Native Stack connected to stubs | ✅ Pass |
 | 20 | Zustand Stores: `api.ts` configured, all 5 data stores implemented | ✅ Pass |
+| 21 | Home Dashboard: Live metrics, top incidents, signal feed | ✅ Pass |
 
 ---
 
 ## Next Recommended Step
 
-**Step 21:** Build home dashboard screen — awaiting `NEXT STEP` instruction.
+**Step 22:** Build incident list and incident detail screens — awaiting `NEXT STEP` instruction.
