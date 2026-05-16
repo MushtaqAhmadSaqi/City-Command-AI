@@ -122,8 +122,9 @@
   - `SimulationScreen.tsx` built with action selection and impact visualization ✅
 - [x] **Step 26:** Build notification screen
   - `NotificationScreen.tsx` built with draft/approve/send workflow ✅
-- [ ] **Step 26:** Build recovery screen
-- [ ] **Step 27:** Build agent trace screen
+- [x] **Step 27:** Build recovery screen
+  - `RecoveryScreen.tsx` built with rollback workflow ✅
+- [ ] **Step 28:** Build agent trace screen
 
 ### Integration & Polish Phase
 
@@ -173,9 +174,10 @@
 | 24 | Resource Allocation Screen: Trigger dispatch, release, trade-offs | ✅ Pass |
 | 25 | Simulation Screen: Sandbox for interventions and side effects | ✅ Pass |
 | 26 | Notification Screen: Draft, review, and dispatch targeted messages | ✅ Pass |
+| 27 | Recovery Screen: False alarm teardown UI and reason capture | ✅ Pass |
 
 ---
 
 ## Next Recommended Step
 
-**Step 27:** Build recovery screen — awaiting `NEXT STEP` instruction.
+**Step 28:** Build agent trace screen — awaiting `NEXT STEP` instruction.
