@@ -86,7 +86,10 @@
 
 ### Backend Advanced Phase
 
-- [ ] **Step 14:** Build resource allocation service
+- [x] **Step 14:** Build resource allocation service
+  - `services/route_matrix.py` — ETA table + Haversine fallback ✅
+  - `agents/allocation.py` — priority-ranked greedy assignment with trade-off notes ✅
+  - `routes/resources.py` — fully implemented (list, detail, allocate, assignments, release) ✅
 - [ ] **Step 15:** Build simulation service
 - [ ] **Step 16:** Build notification draft service
 - [ ] **Step 17:** Build false alarm recovery service
@@ -139,9 +142,10 @@
 | 11 | Agent orchestrator: 6-stage pipeline with traces + fallbacks | ✅ Pass |
 | 12 | Scoring service: 9-factor credibility + priority + classification | ✅ Pass |
 | 13 | Severity agent: vulnerability lookup, sensor adjustments, spread risk | ✅ Pass |
+| 14 | Resource allocation: ETA matrix, trade-off notes, full route API | ✅ Pass |
 
 ---
 
 ## Next Recommended Step
 
-**Step 14:** Build resource allocation service — awaiting `NEXT STEP` instruction.
+**Step 15:** Build simulation service — awaiting `NEXT STEP` instruction.
