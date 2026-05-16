@@ -43,8 +43,6 @@ app = FastAPI(
 
 # ──────────────────────────────────────────────
 # CORS Middleware
-# Allow all origins for hackathon demo flexibility.
-# In production, restrict to specific domains.
 # ──────────────────────────────────────────────
 app.add_middleware(
     CORSMiddleware,
@@ -57,7 +55,6 @@ app.add_middleware(
 
 # ──────────────────────────────────────────────
 # Mount Route Modules
-# Each module handles a specific API domain.
 # ──────────────────────────────────────────────
 app.include_router(health.router,        prefix="/health",        tags=["Health"])
 app.include_router(demo.router,          prefix="/demo",          tags=["Demo"])
@@ -71,22 +68,42 @@ app.include_router(recovery.router,      prefix="/recovery",      tags=["Recover
 
 
 # ──────────────────────────────────────────────
+# Live Pipeline Endpoint (orchestrator trigger)
+# ──────────────────────────────────────────────
+from fastapi import Body
+from app.agents.orchestrator import run_pipeline
+
+@app.post("/pipeline/run", tags=["Pipeline"])
+async def trigger_pipeline(
+    signal_ids: list[str] = Body(default=None, embed=True),
+    trigger: str          = Body(default="manual", embed=True),
+):
+    """
+    Trigger the full deterministic agent pipeline on existing signals.
+    If signal_ids is omitted, all signals in the store are processed.
+    """
+    result = run_pipeline(trigger=trigger, signal_ids=signal_ids)
+    return result
+
+
+# ──────────────────────────────────────────────
 # Root Endpoint
 # ──────────────────────────────────────────────
 @app.get("/", tags=["Root"])
 async def root():
     """Root endpoint — API identity and status."""
     return {
-        "project": "CityCommand AI",
+        "project":     "CityCommand AI",
         "description": "Agentic Crisis Intelligence & Response Orchestrator",
-        "version": "1.0.0",
-        "status": "operational",
-        "docs": "/docs",
+        "version":     "1.0.0",
+        "status":      "operational",
+        "docs":        "/docs",
         "endpoints": {
-            "health": "/health/apis",
-            "demo": "/demo/run-scenario",
-            "signals": "/signals",
+            "health":   "/health/apis",
+            "demo":     "/demo/run-scenario",
+            "signals":  "/signals",
             "incidents": "/incidents",
-            "traces": "/traces",
+            "traces":   "/traces",
+            "pipeline": "/pipeline/run",
         }
     }
