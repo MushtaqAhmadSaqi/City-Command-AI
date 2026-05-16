@@ -116,7 +116,8 @@
   - `IncidentsScreen.tsx` (filtering, sorting) and `IncidentDetailScreen.tsx` (dashboard, actions) ✅
 - [x] **Step 23:** Build AI analysis screen
   - `AIAnalysisScreen.tsx` built with progress bars and alerts ✅
-- [ ] **Step 24:** Build resource allocation screen
+- [x] **Step 24:** Build resource allocation screen
+  - `ResourceAllocationScreen.tsx` built with dispatch triggers and trade-off notes ✅
 - [ ] **Step 24:** Build simulation screen
 - [ ] **Step 25:** Build notification screen
 - [ ] **Step 26:** Build recovery screen
@@ -167,9 +168,10 @@
 | 21 | Home Dashboard: Live metrics, top incidents, signal feed | ✅ Pass |
 | 22 | Incidents list and detail screens: Nav Hub | ✅ Pass |
 | 23 | AI Analysis Screen: Credibility & classification visualization | ✅ Pass |
+| 24 | Resource Allocation Screen: Trigger dispatch, release, trade-offs | ✅ Pass |
 
 ---
 
 ## Next Recommended Step
 
-**Step 24:** Build resource allocation screen — awaiting `NEXT STEP` instruction.
+**Step 25:** Build simulation screen — awaiting `NEXT STEP` instruction.
