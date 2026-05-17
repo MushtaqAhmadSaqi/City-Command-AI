@@ -1,0 +1,19 @@
+version: "3.9"
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  frontend:
+    build: ./mobile
+    ports:
+      - "8081:8081"
+    volumes:
+      - ./mobile:/app
+    depends_on:
+      - backend
