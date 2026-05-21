@@ -29,7 +29,29 @@ The platform is a decoupled monorepo:
 
 ---
 
-## 🚀 Quick Start (Local Demo)
+## 🐳 Quick Start (Docker - Recommended)
+
+The easiest way to run the entire stack is using Docker. No local Python or Node installation is required.
+
+1. Ensure Docker is running.
+2. Run the following command from the project root:
+```bash
+docker-compose up --build
+```
+
+**Access the Platform:**
+- **Frontend Dashboard**: [http://localhost:8081](http://localhost:8081)
+- **Backend API (Swagger)**: [http://localhost:8000/docs](http://localhost:8000/docs)
+
+**Load Demo Data:**
+To trigger the demo scenario and populate the dashboard:
+```bash
+curl -X POST http://localhost:8000/demo/run-scenario
+```
+
+---
+
+## 🚀 Manual Start (Local Demo)
 
 ### Terminal 1: Boot the Backend
 ```bash
