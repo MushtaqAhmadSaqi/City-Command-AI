@@ -3,160 +3,245 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>CityCommand AI — Chrome Demo</title>
+  <title>CityCommand AI — Chrome Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #08111f;
-      --panel: #0f1b2e;
-      --panel-2: #14243c;
-      --muted: #91a3ba;
-      --text: #edf6ff;
-      --brand: #38bdf8;
-      --brand-2: #22d3ee;
-      --good: #22c55e;
-      --warn: #f59e0b;
-      --danger: #ef4444;
-      --violet: #a78bfa;
-      --line: rgba(148, 163, 184, 0.2);
-      --shadow: 0 18px 60px rgba(0,0,0,.35);
-      --radius: 22px;
+      --bg-color: #020617;
+      --bg-panel: rgba(15, 23, 42, 0.55);
+      --bg-panel-hover: rgba(30, 41, 59, 0.7);
+      --border-color: rgba(148, 163, 184, 0.15);
+      --border-hover: rgba(56, 189, 248, 0.4);
+      
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      
+      --brand-primary: #0ea5e9;
+      --brand-gradient: linear-gradient(135deg, #38bdf8, #8b5cf6);
+      
+      --status-good: #10b981;
+      --status-warn: #f59e0b;
+      --status-danger: #ef4444;
+      --status-info: #3b82f6;
+      
+      --shadow-sm: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
+      --shadow-glow: 0 0 30px -5px rgba(56, 189, 248, 0.3);
+      --shadow-glow-danger: 0 0 30px -5px rgba(239, 68, 68, 0.3);
+      
+      --radius-sm: 12px;
+      --radius-md: 20px;
+      --radius-lg: 28px;
     }
+
     * { box-sizing: border-box; }
+    
     body {
       margin: 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(56, 189, 248, .22), transparent 34rem),
-        radial-gradient(circle at bottom right, rgba(167, 139, 250, .16), transparent 34rem),
-        var(--bg);
-      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      background-color: var(--bg-color);
+      background-image: 
+        radial-gradient(circle at 15% 0%, rgba(56, 189, 248, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 85% 100%, rgba(139, 92, 246, 0.15) 0%, transparent 40%);
+      background-attachment: fixed;
+      color: var(--text-main);
       min-height: 100vh;
+      line-height: 1.5;
     }
+
+    h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; margin: 0; }
     button, input, select, textarea { font: inherit; }
-    button { cursor: pointer; }
-    .app {
-      display: grid;
-      grid-template-columns: 290px 1fr;
-      min-height: 100vh;
-    }
+    button { cursor: pointer; border: none; outline: none; }
+
+    /* Layout */
+    .app { display: grid; grid-template-columns: 280px 1fr; min-height: 100vh; }
+    
+    /* Sidebar */
     aside {
-      border-right: 1px solid var(--line);
-      background: rgba(8, 17, 31, .74);
-      backdrop-filter: blur(18px);
-      padding: 24px;
+      border-right: 1px solid var(--border-color);
+      background: rgba(2, 6, 23, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 28px 20px;
       position: sticky;
       top: 0;
       height: 100vh;
       overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      z-index: 10;
     }
-    main { padding: 28px; max-width: 1420px; width: 100%; margin: 0 auto; }
-    .logo { display: flex; gap: 12px; align-items: center; margin-bottom: 26px; }
+    
+    .logo { display: flex; align-items: center; gap: 14px; }
     .logo-mark {
-      width: 44px; height: 44px; border-radius: 16px;
-      background: linear-gradient(135deg, var(--brand), var(--violet));
-      display: grid; place-items: center; font-weight: 900; color: #06111f;
-      box-shadow: 0 10px 30px rgba(56, 189, 248, .25);
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--brand-gradient);
+      display: grid; place-items: center; font-weight: 900; font-size: 20px; color: #fff;
+      box-shadow: var(--shadow-glow);
     }
-    .logo h1 { font-size: 18px; margin: 0; letter-spacing: -.02em; }
-    .logo p { margin: 2px 0 0; color: var(--muted); font-size: 12px; }
+    .logo h1 { font-size: 20px; letter-spacing: -0.02em; }
+    .logo p { margin: 2px 0 0; color: var(--brand-primary); font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; }
+
     nav { display: grid; gap: 8px; }
     .nav-btn {
-      width: 100%; border: 1px solid transparent; border-radius: 16px; padding: 13px 14px;
-      background: transparent; color: var(--muted); display: flex; align-items: center; gap: 12px;
-      text-align: left; transition: .2s ease;
+      width: 100%; border: 1px solid transparent; border-radius: var(--radius-sm); padding: 12px 16px;
+      background: transparent; color: var(--text-muted); display: flex; align-items: center; gap: 14px;
+      text-align: left; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .nav-btn:hover { background: rgba(56, 189, 248, .08); color: var(--text); }
-    .nav-btn.active { background: rgba(56, 189, 248, .14); border-color: rgba(56, 189, 248, .35); color: var(--text); }
-    .nav-icon { width: 28px; height: 28px; border-radius: 10px; display: grid; place-items: center; background: rgba(148,163,184,.1); }
-    .side-card {
-      margin-top: 24px; padding: 16px; border-radius: var(--radius); border: 1px solid var(--line);
-      background: rgba(15, 27, 46, .74);
+    .nav-btn:hover { background: rgba(255, 255, 255, 0.04); color: var(--text-main); transform: translateX(4px); }
+    .nav-btn.active {
+      background: linear-gradient(90deg, rgba(56, 189, 248, 0.1), transparent);
+      border-left: 3px solid var(--brand-primary); color: var(--text-main);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
     }
-    .status-dot { width: 9px; height: 9px; border-radius: 99px; background: var(--good); display: inline-block; box-shadow: 0 0 0 6px rgba(34,197,94,.1); }
-    .topbar { display: flex; justify-content: space-between; align-items: flex-start; gap: 18px; margin-bottom: 24px; }
-    .title h2 { margin: 0; font-size: clamp(26px, 4vw, 44px); letter-spacing: -.04em; }
-    .title p { margin: 8px 0 0; color: var(--muted); max-width: 720px; line-height: 1.6; }
-    .actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+    .nav-icon { font-size: 20px; width: 28px; text-align: center; }
+
+    .connection-status {
+      margin-top: auto; padding: 16px; border-radius: var(--radius-sm);
+      border: 1px solid var(--border-color); background: rgba(0,0,0,0.2);
+      display: flex; align-items: center; gap: 12px; font-size: 13px;
+    }
+    .status-indicator { width: 10px; height: 10px; border-radius: 50%; background: var(--status-good); box-shadow: 0 0 10px var(--status-good); }
+    .status-indicator.offline { background: var(--status-danger); box-shadow: 0 0 10px var(--status-danger); }
+
+    /* Main Area */
+    main { padding: 32px 40px; max-width: 1600px; width: 100%; margin: 0 auto; }
+    
+    .topbar { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; margin-bottom: 32px; flex-wrap: wrap; }
+    .title h2 { font-size: clamp(28px, 4vw, 36px); font-weight: 800; letter-spacing: -0.03em; }
+    .title p { margin: 8px 0 0; color: var(--text-muted); max-width: 700px; font-size: 15px; }
+    
+    .actions { display: flex; gap: 12px; flex-wrap: wrap; }
     .btn {
-      border: 1px solid var(--line); border-radius: 14px; padding: 11px 14px; color: var(--text);
-      background: rgba(15, 27, 46, .8); transition: .2s ease; box-shadow: none;
+      border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 12px 20px;
+      color: var(--text-main); background: var(--bg-panel); 
+      font-weight: 600; font-size: 14px; letter-spacing: 0.02em;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(10px);
     }
-    .btn:hover { border-color: rgba(56,189,248,.5); transform: translateY(-1px); }
-    .btn.primary { background: linear-gradient(135deg, var(--brand), var(--brand-2)); color: #06111f; font-weight: 800; border-color: transparent; }
-    .btn.danger { background: rgba(239, 68, 68, .12); border-color: rgba(239,68,68,.35); color: #fecaca; }
-    .btn.good { background: rgba(34, 197, 94, .12); border-color: rgba(34,197,94,.35); color: #bbf7d0; }
-    .grid { display: grid; gap: 18px; }
+    .btn:hover { border-color: var(--border-hover); background: var(--bg-panel-hover); transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+    .btn.primary { background: var(--brand-gradient); color: #fff; border: none; box-shadow: var(--shadow-glow); }
+    .btn.primary:hover { box-shadow: 0 0 40px -5px rgba(139, 92, 246, 0.6); transform: translateY(-3px) scale(1.02); }
+    .btn.danger { border-color: rgba(239, 68, 68, 0.4); color: #fca5a5; background: rgba(239, 68, 68, 0.1); }
+    .btn.danger:hover { background: rgba(239, 68, 68, 0.2); box-shadow: var(--shadow-glow-danger); }
+
+    /* Utilities */
+    .grid { display: grid; gap: 24px; }
     .cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
     .cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .card {
-      border: 1px solid var(--line); border-radius: var(--radius); background: rgba(15, 27, 46, .78);
-      box-shadow: var(--shadow); padding: 20px; overflow: hidden;
+    .split { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 24px; }
+    
+    .pill {
+      display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px;
+      border-radius: 99px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+      background: rgba(148, 163, 184, 0.1); color: var(--text-muted); border: 1px solid var(--border-color);
     }
-    .card-header { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px; }
-    .card h3 { margin: 0; font-size: 18px; }
-    .card .sub { color: var(--muted); font-size: 13px; margin-top: 5px; }
-    .metric { min-height: 134px; position: relative; }
-    .metric .label { color: var(--muted); font-size: 13px; }
-    .metric .value { font-size: 38px; font-weight: 900; letter-spacing: -.06em; margin: 8px 0; }
-    .metric .small { color: var(--muted); font-size: 13px; }
-    .metric .orb { position: absolute; right: -20px; bottom: -20px; width: 110px; height: 110px; border-radius: 999px; opacity: .22; background: var(--brand); filter: blur(4px); }
-    .pill { display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; padding: 6px 10px; font-size: 12px; border: 1px solid var(--line); color: var(--muted); background: rgba(148,163,184,.08); }
-    .pill.critical { color: #fecaca; border-color: rgba(239,68,68,.4); background: rgba(239,68,68,.1); }
-    .pill.high { color: #fed7aa; border-color: rgba(245,158,11,.4); background: rgba(245,158,11,.1); }
-    .pill.medium { color: #bfdbfe; border-color: rgba(56,189,248,.4); background: rgba(56,189,248,.1); }
-    .pill.good { color: #bbf7d0; border-color: rgba(34,197,94,.4); background: rgba(34,197,94,.1); }
+    .pill.critical { background: rgba(239, 68, 68, 0.15); color: #fca5a5; border-color: rgba(239, 68, 68, 0.3); }
+    .pill.high { background: rgba(245, 158, 11, 0.15); color: #fcd34d; border-color: rgba(245, 158, 11, 0.3); }
+    .pill.medium { background: rgba(56, 189, 248, 0.15); color: #7dd3fc; border-color: rgba(56, 189, 248, 0.3); }
+    .pill.good { background: rgba(16, 185, 129, 0.15); color: #6ee7b7; border-color: rgba(16, 185, 129, 0.3); }
+
+    /* Cards (Glassmorphism) */
+    .card {
+      background: var(--bg-panel);
+      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .card:hover { border-color: rgba(255,255,255,0.1); background: var(--bg-panel-hover); }
+    .card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    }
+    
+    .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; gap: 12px; }
+    .card-header h3 { font-size: 20px; margin-bottom: 4px; }
+    .sub { color: var(--text-muted); font-size: 13px; font-weight: 500; }
+
+    /* Metrics */
+    .metric { padding: 24px; display: flex; flex-direction: column; justify-content: center; }
+    .metric .label { color: var(--text-muted); font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+    .metric .value { font-family: 'Outfit', sans-serif; font-size: 42px; font-weight: 800; line-height: 1.1; margin: 12px 0; }
+    .metric .orb { position: absolute; right: -20%; bottom: -20%; width: 140px; height: 140px; border-radius: 50%; opacity: 0.15; filter: blur(30px); }
+
+    /* Lists */
     .list { display: grid; gap: 12px; }
     .item {
-      border: 1px solid var(--line); border-radius: 18px; padding: 14px; background: rgba(8,17,31,.48);
-      display: grid; gap: 7px;
+      background: rgba(0, 0, 0, 0.2); border: 1px solid transparent; border-radius: var(--radius-sm);
+      padding: 16px; display: grid; gap: 8px; transition: all 0.2s;
     }
-    .item-row { display: flex; justify-content: space-between; gap: 12px; align-items: center; }
-    .item-title { font-weight: 800; }
-    .muted { color: var(--muted); }
-    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
-    .map {
-      min-height: 420px; position: relative; background:
-        linear-gradient(rgba(56,189,248,.08) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(56,189,248,.08) 1px, transparent 1px),
-        radial-gradient(circle at 70% 20%, rgba(239, 68, 68, .23), transparent 13rem),
-        radial-gradient(circle at 22% 68%, rgba(245, 158, 11, .18), transparent 12rem),
-        rgba(8, 17, 31, .65);
-      background-size: 48px 48px, 48px 48px, auto, auto, auto;
-      border-radius: var(--radius); overflow: hidden;
+    .item.clickable { cursor: pointer; border-color: var(--border-color); }
+    .item.clickable:hover { border-color: var(--border-hover); background: rgba(56, 189, 248, 0.05); transform: translateX(4px); }
+    .item-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    .item-title { font-weight: 700; font-size: 15px; }
+
+    /* Map (Stylized) */
+    .map-container {
+      min-height: 400px; position: relative; border-radius: var(--radius-md); overflow: hidden;
+      background: 
+        radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.05) 0%, transparent 70%),
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px),
+        #050b14;
+      background-size: 100% 100%, 40px 40px, 40px 40px;
+      border: 1px solid var(--border-color);
     }
-    .map-label { position: absolute; left: 18px; top: 18px; }
+    .map-label { position: absolute; left: 20px; top: 20px; z-index: 2; }
+    
     .pin { position: absolute; transform: translate(-50%, -50%); display: grid; place-items: center; }
-    .pin::before { content: ''; width: 18px; height: 18px; border-radius: 999px; background: var(--danger); box-shadow: 0 0 0 10px rgba(239,68,68,.16); animation: pulse 1.7s infinite; }
-    .pin.res::before { background: var(--brand); box-shadow: 0 0 0 10px rgba(56,189,248,.16); }
-    @keyframes pulse { 50% { transform: scale(.72); opacity: .65; } }
-    .timeline { position: relative; padding-left: 20px; display: grid; gap: 12px; }
-    .timeline::before { content: ''; position: absolute; left: 7px; top: 4px; bottom: 4px; width: 2px; background: var(--line); }
-    .step { position: relative; border: 1px solid var(--line); border-radius: 18px; padding: 14px; background: rgba(8,17,31,.48); }
-    .step::before { content: ''; position: absolute; left: -19px; top: 18px; width: 12px; height: 12px; border-radius: 99px; background: var(--brand); box-shadow: 0 0 0 6px rgba(56,189,248,.14); }
-    .step.done::before { background: var(--good); box-shadow: 0 0 0 6px rgba(34,197,94,.14); }
-    .bar { height: 10px; border-radius: 999px; background: rgba(148,163,184,.15); overflow: hidden; }
-    .bar > span { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--brand), var(--good)); }
-    form { display: grid; gap: 14px; }
-    label { display: grid; gap: 7px; color: var(--muted); font-size: 13px; }
-    input, textarea, select {
-      width: 100%; border: 1px solid var(--line); border-radius: 16px; padding: 13px 14px;
-      background: rgba(8,17,31,.62); color: var(--text); outline: none;
+    .pin::before {
+      content: ''; width: 20px; height: 20px; border-radius: 50%; 
+      background: var(--status-danger); box-shadow: 0 0 0 0 rgba(239,68,68, 0.5);
+      animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
     }
-    textarea { min-height: 130px; resize: vertical; line-height: 1.5; }
-    input:focus, textarea:focus, select:focus { border-color: rgba(56,189,248,.7); }
-    .section { display: none; }
-    .section.active { display: block; animation: fade .18s ease; }
-    @keyframes fade { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+    .pin::after { content: ''; position: absolute; width: 12px; height: 12px; border-radius: 50%; background: #fff; }
+    .pin.res::before { background: var(--brand-primary); animation: ping-blue 2s cubic-bezier(0, 0, 0.2, 1) infinite; }
+    
+    @keyframes ping { 75%, 100% { transform: scale(3); opacity: 0; box-shadow: 0 0 0 10px rgba(239,68,68, 0); } }
+    @keyframes ping-blue { 75%, 100% { transform: scale(3); opacity: 0; box-shadow: 0 0 0 10px rgba(56,189,248, 0); } }
+
+    /* Progress bar */
+    .bar { height: 6px; border-radius: 99px; background: rgba(255,255,255,0.1); overflow: hidden; margin: 4px 0; }
+    .bar > span { display: block; height: 100%; border-radius: 99px; background: var(--brand-gradient); box-shadow: 0 0 10px rgba(56, 189, 248, 0.8); }
+
+    /* Timeline / Trace */
+    .timeline { position: relative; padding-left: 24px; display: grid; gap: 20px; }
+    .timeline::before { content: ''; position: absolute; left: 8px; top: 8px; bottom: 8px; width: 2px; background: linear-gradient(to bottom, var(--brand-primary), transparent); opacity: 0.3; }
+    .step { position: relative; background: rgba(0,0,0,0.2); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 16px; }
+    .step::before {
+      content: ''; position: absolute; left: -21px; top: 20px; width: 10px; height: 10px; border-radius: 50%;
+      background: var(--brand-primary); box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.2);
+    }
+    .step.done::before { background: var(--status-good); box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2); }
+
+    /* Codebox */
+    .codebox { font-family: ui-monospace, monospace; font-size: 13px; background: #000; border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 16px; color: #a5b4fc; overflow-x: auto; }
+
+    /* Toast */
     .toast {
-      position: fixed; right: 22px; bottom: 22px; background: rgba(15,27,46,.96); border: 1px solid rgba(56,189,248,.35);
-      border-radius: 18px; padding: 14px 16px; box-shadow: var(--shadow); display: none; max-width: 360px; z-index: 20;
+      position: fixed; right: 32px; bottom: 32px; background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(10px);
+      border: 1px solid var(--brand-primary); border-radius: var(--radius-sm); padding: 16px 20px;
+      box-shadow: var(--shadow-glow); display: none; max-width: 400px; z-index: 100;
+      transform: translateY(20px); opacity: 0; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
-    .toast.show { display: block; animation: fade .2s ease; }
-    .codebox { white-space: pre-wrap; background: rgba(8,17,31,.72); border: 1px solid var(--line); border-radius: 18px; padding: 16px; color: #c4f1ff; overflow-x: auto; }
-    .split { display: grid; grid-template-columns: 1.1fr .9fr; gap: 18px; }
-    @media (max-width: 1080px) { .app { grid-template-columns: 1fr; } aside { position: static; height: auto; } nav { grid-template-columns: repeat(2, minmax(0, 1fr)); } .cols-4, .cols-3, .cols-2, .split { grid-template-columns: 1fr; } .topbar { flex-direction: column; } .actions { justify-content: flex-start; } }
-    @media (max-width: 620px) { main, aside { padding: 16px; } nav { grid-template-columns: 1fr; } .item-row { align-items: flex-start; flex-direction: column; } }
+    .toast.show { display: block; transform: translateY(0); opacity: 1; }
+    .toast.error { border-color: var(--status-danger); box-shadow: var(--shadow-glow-danger); }
+
+    /* Sections */
+    .section { display: none; opacity: 0; transform: translateY(10px); transition: all 0.3s ease; }
+    .section.active { display: block; opacity: 1; transform: translateY(0); }
+
+    /* Responsive */
+    @media (max-width: 1200px) { .cols-4 { grid-template-columns: repeat(2, 1fr); } .split { grid-template-columns: 1fr; } }
+    @media (max-width: 900px) { .app { grid-template-columns: 1fr; } aside { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--border-color); flex-direction: row; flex-wrap: wrap; align-items: center; } nav { display: flex; flex-wrap: wrap; width: 100%; } .nav-btn { width: auto; } .connection-status { margin-left: auto; } main { padding: 24px 20px; } .cols-3 { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -166,286 +251,502 @@
         <div class="logo-mark">CC</div>
         <div>
           <h1>CityCommand AI</h1>
-          <p>Chrome-ready emergency demo</p>
+          <p>Agentic Orchestrator</p>
         </div>
       </div>
       <nav id="nav"></nav>
-      <div class="side-card">
-        <div class="item-row"><span><span class="status-dot"></span> &nbsp;System</span><span class="pill good">Online</span></div>
-        <p class="muted" style="line-height:1.55; margin-bottom:0">This version runs fully inside Chrome. No Expo, Android emulator, backend server, or API key is required.</p>
-      </div>
-      <div class="side-card">
-        <div class="muted" style="font-size:12px">Latest AI decision</div>
-        <div id="sideDecision" style="font-weight:900; margin-top:8px">Monitoring city grid</div>
+      <div class="connection-status">
+        <div id="apiStatusDot" class="status-indicator offline"></div>
+        <span id="apiStatusText">Connecting to Backend...</span>
       </div>
     </aside>
+    
     <main>
       <div class="topbar">
         <div class="title">
           <h2 id="pageTitle">Dashboard</h2>
-          <p id="pageDesc">A simple browser version of the CityCommand AI idea: intake signals, score credibility, classify threats, assign resources, explain the trace, notify responders, and recover false alarms.</p>
+          <p id="pageDesc">Connecting to FastAPI backend...</p>
         </div>
         <div class="actions">
-          <button class="btn" onclick="resetDemo()">Reset Demo</button>
-          <button class="btn primary" onclick="runPipeline()">Run AI Pipeline</button>
+          <button class="btn danger" onclick="apiResetDemo()">Reset State</button>
+          <button class="btn primary" onclick="apiRunScenario()">▶ Run AI Pipeline</button>
         </div>
       </div>
 
-      <section id="dashboard" class="section active"></section>
-      <section id="signals" class="section"></section>
-      <section id="incidents" class="section"></section>
-      <section id="analysis" class="section"></section>
-      <section id="resources" class="section"></section>
-      <section id="trace" class="section"></section>
-      <section id="simulation" class="section"></section>
-      <section id="recovery" class="section"></section>
-      <section id="notifications" class="section"></section>
-      <section id="api" class="section"></section>
+      <div id="dashboard" class="section active"></div>
+      <div id="incidents" class="section"></div>
+      <div id="analysis" class="section"></div>
+      <div id="signals" class="section"></div>
+      <div id="trace" class="section"></div>
+      
     </main>
   </div>
+  
   <div id="toast" class="toast"></div>
 
   <script>
+    // --- Configuration ---
+    const API_BASE = 'http://localhost:8000';
+    
+    // --- State ---
+    let state = {
+      demoLoaded: false,
+      stats: { total_signals: 0, active_incidents: 0, total_incidents: 0, available_resources: 0, total_traces: 0 },
+      incidents: [],
+      signals: [],
+      traces: [],
+      selectedIncident: null, // Full incident detail object
+      selectedIncidentId: null,
+    };
+    
+    let currentTab = 'dashboard';
+
+    // --- Navigation ---
     const navItems = [
-      ['dashboard','Dashboard','📊','Live metrics and map'],
-      ['signals','Signal Intake','📡','Create and inspect reports'],
-      ['incidents','Incidents','🚨','Threat queue'],
-      ['analysis','AI Analysis','🧠','Evidence and confidence'],
-      ['resources','Resources','🚑','Fleet assignment'],
-      ['trace','Agent Trace','🧾','Explainable AI steps'],
-      ['simulation','Simulation','🧪','What-if planning'],
-      ['recovery','Recovery','↩️','False alarm rollback'],
-      ['notifications','Notifications','🔔','Responder messages'],
-      ['api','API Preview','🔌','Simple endpoint model']
+      { id: 'dashboard', label: 'Command Center', icon: '🌍', desc: 'Live operational overview and metrics' },
+      { id: 'incidents', label: 'Incident Queue', icon: '🚨', desc: 'Prioritized list of active threats' },
+      { id: 'analysis', label: 'AI Analysis', icon: '🧠', desc: 'Deep dive into agent classifications and evidence' },
+      { id: 'signals', label: 'Signal Intake', icon: '📡', desc: 'Raw reports and sensory inputs' },
+      { id: 'trace', label: 'Agent Trace', icon: '🧾', desc: 'Explainable AI decision lineage' }
     ];
 
-    const baseState = () => ({
-      selectedIncident: 'INC-1001',
-      lastDecision: 'Monitoring city grid',
-      signals: [
-        { id:'SIG-001', source:'Social', text:'Multiple posts report heavy smoke and fire near Blue Area metro station. People are moving away from platform.', lat:33.7205, lng:73.0712, urgency:'high', credibility:0.82, time:'09:24' },
-        { id:'SIG-002', source:'IoT Sensor', text:'Thermal sensor spike detected near commercial block. Air quality PM2.5 abnormal.', lat:33.7211, lng:73.0699, urgency:'critical', credibility:0.91, time:'09:26' },
-        { id:'SIG-003', source:'Field Report', text:'Traffic police reports road congestion near F-8 exchange after minor collision.', lat:33.6951, lng:73.0369, urgency:'medium', credibility:0.74, time:'09:28' }
-      ],
-      incidents: [
-        { id:'INC-1001', title:'Fire near Blue Area Metro', type:'Fire', severity:'CRITICAL', status:'active', confidence:0.91, area:'Blue Area', lat:33.7205, lng:73.0712, created:'09:27', summary:'Triangulated smoke reports and sensor spike indicate a high-confidence fire emergency near public transport infrastructure.', signals:['SIG-001','SIG-002'], assigned:['FIRE-12','AMB-04','POL-07','DRN-02'], evidence:['2 independent signals within 400m','Thermal anomaly above threshold','Public transport impact detected'], recommendation:'Dispatch fire unit, ambulance, police traffic control, and aerial drone immediately.' },
-        { id:'INC-1002', title:'Nullah Lai flood risk', type:'Flood', severity:'HIGH', status:'monitoring', confidence:0.78, area:'Rawalpindi / Islamabad corridor', lat:33.6372, lng:73.0628, created:'09:30', summary:'Rainfall and drainage warnings show a developing flood risk. Escalate if water level crosses the next threshold.', signals:[], assigned:['RES-11','DRN-03'], evidence:['Rainfall forecast rising','Known low-lying route','Historical flood-prone location'], recommendation:'Keep rescue unit and drone on standby; notify municipal drainage team.' }
-      ],
-      resources: [
-        { id:'FIRE-12', name:'Fire Unit 12', type:'Fire', status:'assigned', area:'Blue Area', eta:6, incident:'INC-1001' },
-        { id:'AMB-04', name:'Ambulance 04', type:'Medical', status:'assigned', area:'G-7', eta:8, incident:'INC-1001' },
-        { id:'POL-07', name:'Police Traffic 07', type:'Police', status:'assigned', area:'Jinnah Avenue', eta:5, incident:'INC-1001' },
-        { id:'DRN-02', name:'Drone Recon 02', type:'Drone', status:'assigned', area:'Blue Area', eta:3, incident:'INC-1001' },
-        { id:'RES-11', name:'Rescue Boat 11', type:'Rescue', status:'standby', area:'Nullah Lai', eta:12, incident:'INC-1002' },
-        { id:'DRN-03', name:'Drone Recon 03', type:'Drone', status:'standby', area:'Rawalpindi corridor', eta:9, incident:'INC-1002' },
-        { id:'MED-02', name:'Mobile Clinic 02', type:'Medical', status:'available', area:'F-10', eta:14, incident:null },
-        { id:'POL-02', name:'Police Unit 02', type:'Police', status:'available', area:'I-8', eta:10, incident:null }
-      ],
-      notifications: [
-        { id:'NOT-001', target:'Fire Control', status:'sent', text:'Critical fire incident assigned: Fire Unit 12 to Blue Area Metro.', time:'09:29' },
-        { id:'NOT-002', target:'Medical Dispatch', status:'sent', text:'Ambulance 04 assigned to staging point near Blue Area.', time:'09:29' },
-        { id:'NOT-003', target:'Traffic Police', status:'sent', text:'Block Jinnah Avenue entry lane and create emergency corridor.', time:'09:30' }
-      ],
-      trace: [
-        { agent:'Intake Agent', status:'done', confidence:0.96, output:'Normalized 3 signals and grouped nearby reports.' },
-        { agent:'Credibility Agent', status:'done', confidence:0.91, output:'Cross-source confirmation increased trust score.' },
-        { agent:'Classification Agent', status:'done', confidence:0.89, output:'Threat class: Fire. Impact zone: public transport/commercial.' },
-        { agent:'Severity Agent', status:'done', confidence:0.92, output:'Severity raised to CRITICAL due to crowd density and sensor anomaly.' },
-        { agent:'Dispatch Agent', status:'done', confidence:0.87, output:'Allocated nearest fire, medical, police, and drone resources.' },
-        { agent:'Notification Agent', status:'done', confidence:0.95, output:'Responder notifications generated and logged.' }
-      ],
-      sim: { name:'Baseline', severity:'CRITICAL', etaDelta:'0 min', resourceDelta:'4 units', risk:'High but controlled' }
-    });
-
-    let state = JSON.parse(localStorage.getItem('ccai-state') || 'null') || baseState();
-    let current = 'dashboard';
-
-    function save(){ localStorage.setItem('ccai-state', JSON.stringify(state)); }
-    function cls(sev){ return (sev || '').toLowerCase() === 'critical' ? 'critical' : (sev || '').toLowerCase() === 'high' ? 'high' : 'medium'; }
-    function iconFor(type){ return {Fire:'🔥', Flood:'🌊', Medical:'🚑', Police:'🚓', Drone:'🛸', Rescue:'🛟'}[type] || '📍'; }
-    function showToast(title, text){ const el = document.getElementById('toast'); el.innerHTML = `<strong>${title}</strong><div class="muted" style="margin-top:6px; line-height:1.45">${text}</div>`; el.classList.add('show'); setTimeout(()=>el.classList.remove('show'), 3600); }
-    function percent(n){ return Math.round((n || 0) * 100); }
-    function selectedIncident(){ return state.incidents.find(i => i.id === state.selectedIncident) || state.incidents[0]; }
-
-    function setupNav(){
-      document.getElementById('nav').innerHTML = navItems.map(([id,label,icon,sub]) => `
-        <button class="nav-btn ${id===current?'active':''}" onclick="go('${id}')">
-          <span class="nav-icon">${icon}</span><span><strong>${label}</strong><br><small>${sub}</small></span>
-        </button>`).join('');
+    function renderNav() {
+      document.getElementById('nav').innerHTML = navItems.map(n => `
+        <button class="nav-btn ${n.id === currentTab ? 'active' : ''}" onclick="go('${n.id}')">
+          <span class="nav-icon">${n.icon}</span>
+          <span style="font-weight:600">${n.label}</span>
+        </button>
+      `).join('');
     }
 
-    function go(id){ current = id; document.querySelectorAll('.section').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); document.getElementById('pageTitle').textContent = navItems.find(n=>n[0]===id)[1]; document.getElementById('pageDesc').textContent = descriptions[id]; setupNav(); render(); }
-
-    const descriptions = {
-      dashboard:'Live command-center overview with incident metrics, active resource count, and a city grid map.',
-      signals:'Inject raw field reports, social posts, or sensor alerts, then run the deterministic AI pipeline.',
-      incidents:'Review active, monitoring, and resolved incidents with severity and confidence.',
-      analysis:'See evidence, confidence, and the final recommended action for the selected incident.',
-      resources:'View fleet units, assignment status, ETAs, and incident linkage.',
-      trace:'Explainable AI trace showing how the system moved from raw signal to dispatch.',
-      simulation:'Try what-if scenarios such as escalation, extra congestion, or false alarm.',
-      recovery:'Resolve incidents or roll back false alarms and automatically free assigned resources.',
-      notifications:'Audit responder notifications created by the AI pipeline.',
-      api:'A simple local-browser model of the API routes that the original FastAPI backend exposes.'
-    };
-
-    function render(){
-      setupNav();
-      document.getElementById('sideDecision').textContent = state.lastDecision;
-      renderDashboard(); renderSignals(); renderIncidents(); renderAnalysis(); renderResources(); renderTrace(); renderSimulation(); renderRecovery(); renderNotifications(); renderApi();
+    function go(id) {
+      currentTab = id;
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      
+      const navItem = navItems.find(n => n.id === id);
+      document.getElementById('pageTitle').textContent = navItem.label;
+      document.getElementById('pageDesc').textContent = navItem.desc;
+      
+      renderNav();
+      renderCurrentView();
     }
 
-    function metric(label, value, small, color='var(--brand)'){
-      return `<div class="card metric"><div class="label">${label}</div><div class="value">${value}</div><div class="small">${small}</div><div class="orb" style="background:${color}"></div></div>`;
+    // --- Utility Functions ---
+    function formatSev(sev) {
+        if(!sev) return 'UNKNOWN';
+        return sev.toUpperCase();
+    }
+    
+    function sevClass(sev) {
+      if(!sev) return 'medium';
+      const s = sev.toUpperCase();
+      if(s === 'CRITICAL') return 'critical';
+      if(s === 'HIGH') return 'high';
+      return 'medium';
+    }
+    
+    function percent(n) { return Math.round((n || 0) * 100); }
+    
+    function showToast(title, msg, isError=false) {
+      const el = document.getElementById('toast');
+      el.className = `toast ${isError ? 'error' : ''}`;
+      el.innerHTML = `<h4 style="margin:0; font-size:16px;">${title}</h4><div style="color:var(--text-muted); font-size:14px; margin-top:4px;">${msg}</div>`;
+      
+      // trigger reflow to restart animation if already showing
+      void el.offsetWidth;
+      el.classList.add('show');
+      
+      setTimeout(() => el.classList.remove('show'), 4000);
     }
 
-    function renderDashboard(){
-      const active = state.incidents.filter(i=>i.status!=='resolved');
-      const critical = active.filter(i=>i.severity==='CRITICAL').length;
-      const assigned = state.resources.filter(r=>r.status==='assigned').length;
-      const available = state.resources.filter(r=>r.status==='available').length;
-      document.getElementById('dashboard').innerHTML = `
+    // --- API Integration ---
+    async function apiFetch(endpoint, options = {}) {
+      try {
+        const res = await fetch(`${API_BASE}${endpoint}`, {
+          ...options,
+          headers: { 'Content-Type': 'application/json', ...options.headers }
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || `HTTP error ${res.status}`);
+        return data;
+      } catch (err) {
+        console.error('API Error:', err);
+        throw err;
+      }
+    }
+
+    async function checkHealth() {
+      try {
+        const data = await apiFetch('/demo/status');
+        document.getElementById('apiStatusDot').className = 'status-indicator';
+        document.getElementById('apiStatusText').textContent = 'Backend Online';
+        
+        state.demoLoaded = data.data.demo_loaded;
+        state.stats = data.data.stats || state.stats;
+        
+        if (state.demoLoaded) {
+            await fetchAllData();
+        } else {
+            // Clear arrays if demo not loaded
+            state.incidents = [];
+            state.signals = [];
+            state.selectedIncident = null;
+        }
+        renderCurrentView();
+      } catch (err) {
+        document.getElementById('apiStatusDot').className = 'status-indicator offline';
+        document.getElementById('apiStatusText').textContent = 'Backend Offline';
+        showToast('Connection Failed', 'Ensure FastAPI is running on port 8000.', true);
+      }
+    }
+
+    async function fetchAllData() {
+        try {
+            const incRes = await apiFetch('/incidents');
+            state.incidents = incRes.data || [];
+            
+            // Auto select first incident if none selected
+            if (state.incidents.length > 0 && !state.selectedIncidentId) {
+                await selectIncident(state.incidents[0].id, false);
+            } else if (state.selectedIncidentId) {
+                await selectIncident(state.selectedIncidentId, false);
+            }
+            
+            // Optional: fetch signals for dashboard list, though backend /signals isn't explicitly defined in standard crud, 
+            // the main.py exports a signals router. Let's gracefully try.
+            try {
+                const sigRes = await apiFetch('/signals');
+                state.signals = sigRes.data || [];
+            } catch(e) { console.log('Could not fetch signals directly'); }
+            
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    async function selectIncident(id, navigate=true) {
+        state.selectedIncidentId = id;
+        try {
+            const data = await apiFetch(`/incidents/${id}`);
+            state.selectedIncident = data.data;
+            if (navigate) go('analysis');
+            else renderCurrentView();
+        } catch(e) {
+            showToast('Error', 'Failed to load incident details', true);
+        }
+    }
+
+    async function apiRunScenario() {
+      if(state.demoLoaded) {
+          showToast('Info', 'Demo already loaded. Resetting first...');
+          await apiResetDemo(false);
+      }
+      showToast('Running Pipeline', 'Agents are processing the scenario...');
+      try {
+        const res = await apiFetch('/demo/run-scenario', { method: 'POST' });
+        showToast('Pipeline Complete', `Created ${res.data.incidents_created} incidents.`);
+        await checkHealth();
+      } catch(e) {
+        showToast('Pipeline Error', e.message, true);
+      }
+    }
+
+    async function apiResetDemo(refresh=true) {
+      try {
+        await apiFetch('/demo/reset', { method: 'POST' });
+        if(refresh) {
+            showToast('Reset Complete', 'Data store has been wiped.');
+            await checkHealth();
+            go('dashboard');
+        }
+      } catch(e) {
+        showToast('Reset Error', e.message, true);
+      }
+    }
+
+    // --- Renderers ---
+    
+    function renderDashboard() {
+      const el = document.getElementById('dashboard');
+      if (!state.demoLoaded) {
+          el.innerHTML = `<div class="card" style="text-align:center; padding: 60px 20px;">
+              <div class="logo-mark" style="margin: 0 auto 20px; width:64px; height:64px; font-size: 28px;">CC</div>
+              <h2>Ready to initialize</h2>
+              <p class="sub" style="margin-bottom: 24px;">The data store is empty. Run the AI pipeline to ingest the seed scenario.</p>
+              <button class="btn primary" onclick="apiRunScenario()" style="padding: 14px 32px; font-size: 16px;">Run Scenario</button>
+          </div>`;
+          return;
+      }
+
+      el.innerHTML = `
         <div class="grid cols-4">
-          ${metric('Active incidents', active.length, `${critical} critical incident`, critical ? 'var(--danger)' : 'var(--brand)')}
-          ${metric('Signals processed', state.signals.length, 'raw reports in memory')}
-          ${metric('Units deployed', assigned, `${available} units still available`, 'var(--good)')}
-          ${metric('Avg confidence', percent(active.reduce((a,i)=>a+i.confidence,0)/(active.length || 1))+'%', 'deterministic score', 'var(--violet)')}
+          <div class="card metric">
+            <div class="label">Active Incidents</div>
+            <div class="value">${state.stats.active_incidents || 0}</div>
+            <div class="sub">Prioritized threats</div>
+            <div class="orb" style="background:var(--status-danger)"></div>
+          </div>
+          <div class="card metric">
+            <div class="label">Signals Processed</div>
+            <div class="value">${state.stats.total_signals || 0}</div>
+            <div class="sub">Raw intelligence items</div>
+            <div class="orb" style="background:var(--brand-primary)"></div>
+          </div>
+          <div class="card metric">
+            <div class="label">Agent Traces</div>
+            <div class="value">${state.stats.total_traces || 0}</div>
+            <div class="sub">Explainable decisions</div>
+            <div class="orb" style="background:#8b5cf6"></div>
+          </div>
+          <div class="card metric">
+            <div class="label">Active Resources</div>
+            <div class="value">${(state.stats.total_resources || 0) - (state.stats.available_resources || 0)}</div>
+            <div class="sub">Units deployed</div>
+            <div class="orb" style="background:var(--status-good)"></div>
+          </div>
         </div>
-        <div class="split" style="margin-top:18px">
-          <div class="card map">
-            <div class="map-label"><span class="pill good">Islamabad / Rawalpindi Command Grid</span></div>
-            ${state.incidents.filter(i=>i.status!=='resolved').map((i,idx)=>`<div class="pin" title="${i.title}" style="left:${idx?30:68}%; top:${idx?70:34}%"></div>`).join('')}
-            ${state.resources.filter(r=>r.status!=='available').map((r,idx)=>`<div class="pin res" title="${r.name}" style="left:${20 + (idx*11)%65}%; top:${28 + (idx*13)%55}%"></div>`).join('')}
+
+        <div class="split" style="margin-top: 32px">
+          <div class="card map-container">
+            <div class="map-label"><span class="pill good">Islamabad Live Grid</span></div>
+            ${state.incidents.map((i, idx) => `
+                <div class="pin" title="${i.title}" style="left:${35 + idx*30}%; top:${45 + idx*20}%;"></div>
+            `).join('')}
           </div>
+          
           <div class="grid">
-            <div class="card"><div class="card-header"><div><h3>Priority Incidents</h3><div class="sub">Highest risk first</div></div><button class="btn" onclick="go('incidents')">Open</button></div><div class="list">${state.incidents.slice().sort((a,b)=>b.confidence-a.confidence).map(incidentCard).join('')}</div></div>
-            <div class="card"><div class="card-header"><div><h3>Latest Signals</h3><div class="sub">Recent inputs</div></div><button class="btn" onclick="go('signals')">Inject</button></div><div class="list">${state.signals.slice(-3).reverse().map(signalCard).join('')}</div></div>
+            <div class="card">
+                <div class="card-header">
+                    <div><h3>Priority Queue</h3><div class="sub">Highest impact active incidents</div></div>
+                </div>
+                <div class="list">
+                    ${state.incidents.map(i => `
+                        <div class="item clickable" onclick="selectIncident('${i.id}')">
+                            <div class="item-row">
+                                <span class="item-title">${i.title}</span>
+                                <span class="pill ${sevClass(i.severity)}">${formatSev(i.severity)}</span>
+                            </div>
+                            <div class="item-row" style="margin-top: 4px;">
+                                <span class="sub">${percent(i.confidence)}% Confidence</span>
+                                <span class="sub">${i.assignment_count || 0} units assigned</span>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
           </div>
-        </div>`;
+        </div>
+      `;
     }
 
-    function signalCard(s){ return `<div class="item"><div class="item-row"><span class="item-title">${s.id} · ${s.source}</span><span class="pill ${s.urgency==='critical'?'critical':s.urgency==='high'?'high':'medium'}">${s.urgency}</span></div><div class="muted">${s.text}</div><div class="item-row"><small class="muted">${s.time} · ${s.lat.toFixed(4)}, ${s.lng.toFixed(4)}</small><small>${percent(s.credibility)}% credibility</small></div></div>`; }
-    function incidentCard(i){ return `<div class="item" onclick="state.selectedIncident='${i.id}'; save(); go('analysis')" style="cursor:pointer"><div class="item-row"><span class="item-title">${iconFor(i.type)} ${i.title}</span><span class="pill ${cls(i.severity)}">${i.severity}</span></div><div class="muted">${i.area} · ${i.status}</div><div class="bar"><span style="width:${percent(i.confidence)}%"></span></div><small class="muted">${percent(i.confidence)}% confidence · ${i.assigned.length} assigned units</small></div>`; }
-
-    function renderSignals(){
-      document.getElementById('signals').innerHTML = `
-        <div class="split">
-          <div class="card"><h3>Manual Signal Intake</h3><p class="sub">Paste a report. The demo will score it and create/update an incident.</p>
-            <form onsubmit="submitSignal(event)">
-              <label>Raw report text<textarea id="signalText" required minlength="10">Smoke visible near a school gate in G-9. Crowd is gathering and traffic is blocked.</textarea></label>
-              <div class="grid cols-3"><label>Source<select id="signalSource"><option>Field Report</option><option>Social</option><option>IoT Sensor</option><option>Emergency Call</option></select></label><label>Latitude<input id="signalLat" type="number" step="0.0001" value="33.6844"></label><label>Longitude<input id="signalLng" type="number" step="0.0001" value="73.0479"></label></div>
-              <label>Urgency<select id="signalUrgency"><option value="medium">Medium</option><option value="high" selected>High</option><option value="critical">Critical</option></select></label>
-              <button class="btn primary" type="submit">Inject Signal + Run Pipeline</button>
-            </form>
-          </div>
-          <div class="card"><div class="card-header"><div><h3>Signal Feed</h3><div class="sub">All reports stored locally in Chrome</div></div><span class="pill">${state.signals.length} total</span></div><div class="list">${state.signals.slice().reverse().map(signalCard).join('')}</div></div>
-        </div>`;
+    function renderIncidents() {
+      const el = document.getElementById('incidents');
+      el.innerHTML = `
+        <div class="card">
+            <div class="card-header">
+                <div><h3>Incident Registry</h3><div class="sub">All threats scored by AI</div></div>
+                <span class="pill">${state.incidents.length} Records</span>
+            </div>
+            <div class="list">
+                ${state.incidents.map(i => `
+                    <div class="item clickable" onclick="selectIncident('${i.id}')">
+                        <div class="item-row">
+                            <div>
+                                <div class="item-row" style="justify-content: flex-start;">
+                                    <span class="item-title">${i.title}</span>
+                                    <span class="pill ${sevClass(i.severity)}">${formatSev(i.severity)}</span>
+                                </div>
+                                <div class="sub" style="margin-top: 6px;">ID: ${i.id} · Created: ${new Date(i.created_at).toLocaleTimeString()}</div>
+                            </div>
+                            <div style="text-align: right; width: 120px;">
+                                <div class="sub">Priority</div>
+                                <div class="bar"><span style="width: ${i.priority_score || 0}%"></span></div>
+                                <strong style="font-size:18px;">${Math.round(i.priority_score || 0)}</strong>
+                            </div>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+      `;
     }
 
-    function submitSignal(e){
-      e.preventDefault();
-      const id = 'SIG-' + String(state.signals.length + 1).padStart(3,'0');
-      const text = document.getElementById('signalText').value.trim();
-      const source = document.getElementById('signalSource').value;
-      const urgency = document.getElementById('signalUrgency').value;
-      const lat = Number(document.getElementById('signalLat').value || 33.6844);
-      const lng = Number(document.getElementById('signalLng').value || 73.0479);
-      const credibility = Math.min(.97, .55 + (text.length > 80 ? .18 : .08) + (source === 'IoT Sensor' ? .23 : .12) + (urgency === 'critical' ? .08 : 0));
-      state.signals.push({ id, source, text, lat, lng, urgency, credibility, time: new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) });
-      save(); runPipeline(id);
+    function renderAnalysis() {
+        const el = document.getElementById('analysis');
+        const inc = state.selectedIncident;
+        
+        if (!inc) {
+            el.innerHTML = `<div class="card"><p class="sub">Select an incident from the queue to view analysis.</p></div>`;
+            return;
+        }
+
+        const sev = inc.severity_prediction || {};
+        const asgns = inc.resource_assignments || [];
+        const signals = inc.signals || [];
+        
+        el.innerHTML = `
+            <div class="split">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div style="display:flex; gap:12px; align-items:center;">
+                                <span class="pill ${sevClass(inc.severity)}">${formatSev(inc.severity)}</span>
+                                <h3>${inc.title}</h3>
+                            </div>
+                            <div class="sub" style="margin-top:6px">${inc.id} · ${inc.location?.area || 'Unknown Area'}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid cols-2" style="margin: 24px 0; background:rgba(0,0,0,0.2); padding:20px; border-radius:var(--radius-sm); border:1px solid var(--border-color);">
+                        <div>
+                            <div class="sub">AI Confidence</div>
+                            <div class="bar" style="margin: 8px 0; width:80%;"><span style="width:${percent(inc.confidence)}%"></span></div>
+                            <h2 style="font-family:'Inter';">${percent(inc.confidence)}%</h2>
+                        </div>
+                        <div>
+                            <div class="sub">Status</div>
+                            <h3 style="margin-top: 10px; color:${inc.status === 'active' ? 'var(--brand-primary)' : 'var(--status-warn)'}">${inc.status.replace(/_/g, ' ').toUpperCase()}</h3>
+                            ${inc.human_review_required ? `<span class="pill critical" style="margin-top:8px;">Human Review Req.</span>` : ''}
+                        </div>
+                    </div>
+
+                    <h4>Severity Prediction</h4>
+                    <div class="grid cols-3" style="margin-top:12px; margin-bottom: 24px;">
+                        <div><div class="sub">Population Risk</div><div style="font-weight:700">${sev.population_affected || 'N/A'}</div></div>
+                        <div><div class="sub">Est. Duration</div><div style="font-weight:700">${sev.duration_min || 0} min</div></div>
+                        <div><div class="sub">Spread Risk</div><div style="font-weight:700">${sev.spread_risk || 'N/A'}</div></div>
+                    </div>
+                    
+                    <h4>Resource Allocations</h4>
+                    <div class="list" style="margin-top: 12px;">
+                        ${asgns.length === 0 ? '<span class="sub">No resources assigned.</span>' : asgns.map(a => `
+                            <div class="item">
+                                <div class="item-row">
+                                    <strong>${a.resource_name}</strong>
+                                    <span class="pill medium">ETA: ${a.eta_min}m</span>
+                                </div>
+                                <div class="sub">${a.priority_reason}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                
+                <div class="grid">
+                    <div class="card">
+                        <h3>Alternative Hypotheses</h3>
+                        <div class="list" style="margin-top:16px;">
+                            ${(!inc.alternate_hypotheses || inc.alternate_hypotheses.length === 0) ? 
+                                '<div class="sub">No credible alternate hypotheses generated. AI is highly confident in primary.</div>' : 
+                                inc.alternate_hypotheses.map(alt => `
+                                <div class="item" style="border-left: 3px solid var(--status-warn);">
+                                    <div class="item-row">
+                                        <strong>${(alt.type || '').replace(/_/g, ' ').toUpperCase()}</strong>
+                                        <span class="pill">${percent(alt.confidence)}%</span>
+                                    </div>
+                                    <div class="sub">${alt.reason}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>Corroborating Signals</h3>
+                        <div class="list" style="margin-top:16px;">
+                            ${signals.length === 0 ? '<div class="sub">No linked signals loaded.</div>' : signals.slice(0,3).map(s => `
+                                <div class="item">
+                                    <div class="item-row">
+                                        <span class="pill">${s.source_type}</span>
+                                        <span class="sub">${new Date(s.timestamp).toLocaleTimeString()}</span>
+                                    </div>
+                                    <div style="font-size:13px; margin-top:8px; font-family:monospace; color:var(--brand-primary);">${s.normalized_text?.substring(0, 80)}...</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+    
+    function renderTrace() {
+        const el = document.getElementById('trace');
+        const inc = state.selectedIncident;
+        
+        if (!inc) {
+            el.innerHTML = `<div class="card"><p class="sub">Select an incident to view its agent trace.</p></div>`;
+            return;
+        }
+
+        const traces = inc.traces || [];
+        
+        el.innerHTML = `
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <h3>Explainable AI Pipeline Trace</h3>
+                        <div class="sub">Deterministic execution log for ${inc.title}</div>
+                    </div>
+                    <span class="pill good">${traces.length} steps logged</span>
+                </div>
+                <div class="timeline" style="margin-top: 24px;">
+                    ${traces.length === 0 ? '<div class="sub">No trace data found.</div>' : traces.map(t => `
+                        <div class="step done">
+                            <div class="item-row">
+                                <h4 style="color:var(--brand-primary);">${t.agent_name} <span class="sub" style="font-weight:400; font-family:'Inter'">:: ${t.step}</span></h4>
+                                <span class="pill">${t.duration_ms}ms</span>
+                            </div>
+                            <div class="grid cols-2" style="margin-top: 12px; gap: 16px;">
+                                <div><div class="sub">Input Context</div><div style="font-size:13px; margin-top:4px;">${t.input_summary}</div></div>
+                                <div><div class="sub">Agent Output</div><div style="font-size:13px; margin-top:4px; font-weight:600; color:var(--text-main);">${t.output_summary}</div></div>
+                            </div>
+                            ${t.tool_calls?.length > 0 ? `
+                                <div class="codebox" style="margin-top: 12px; padding: 10px;">> Executed: ${t.tool_calls.join(', ')}</div>
+                            ` : ''}
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
+    
+    function renderSignals() {
+         const el = document.getElementById('signals');
+         const signals = state.signals || [];
+         
+         el.innerHTML = `
+             <div class="card">
+                 <div class="card-header">
+                     <div><h3>Raw Intake Feed</h3><div class="sub">Signals ingested before classification</div></div>
+                     <span class="pill">${signals.length} records</span>
+                 </div>
+                 <div class="list">
+                     ${signals.length === 0 ? '<div class="sub">No signals loaded.</div>' : signals.map(s => `
+                         <div class="item">
+                             <div class="item-row">
+                                 <strong>${s.id} · <span style="text-transform:uppercase">${s.source_type}</span></strong>
+                                 <span class="sub">${new Date(s.timestamp).toLocaleTimeString()}</span>
+                             </div>
+                             <p style="font-size:14px; margin: 8px 0;">${s.raw_text || s.normalized_text}</p>
+                             <div class="codebox" style="padding:8px; font-size:12px;">Location: ${s.location_text || 'N/A'} | Credibility Score: ${(s.metadata?.credibility_score || 0).toFixed(2)}</div>
+                         </div>
+                     `).join('')}
+                 </div>
+             </div>
+         `;
     }
 
-    function classify(text){
-      const t = text.toLowerCase();
-      if(t.includes('smoke') || t.includes('fire') || t.includes('thermal')) return ['Fire','Fire / smoke emergency'];
-      if(t.includes('flood') || t.includes('rain') || t.includes('water')) return ['Flood','Flood risk'];
-      if(t.includes('accident') || t.includes('collision') || t.includes('injured')) return ['Medical','Traffic / medical emergency'];
-      return ['Police','Public safety incident'];
+    function renderCurrentView() {
+        if(currentTab === 'dashboard') renderDashboard();
+        if(currentTab === 'incidents') renderIncidents();
+        if(currentTab === 'analysis') renderAnalysis();
+        if(currentTab === 'trace') renderTrace();
+        if(currentTab === 'signals') renderSignals();
     }
 
-    function runPipeline(signalId){
-      const s = signalId ? state.signals.find(x=>x.id===signalId) : state.signals[state.signals.length-1];
-      const [type, title] = classify(s.text);
-      const sev = s.urgency === 'critical' || s.credibility > .88 ? 'CRITICAL' : s.urgency === 'high' ? 'HIGH' : 'MEDIUM';
-      const id = 'INC-' + String(1000 + state.incidents.length + 1);
-      const area = s.lat > 33.70 ? 'Blue Area / G-6 corridor' : s.lat > 33.66 ? 'G-9 / F-8 corridor' : 'Rawalpindi corridor';
-      const available = state.resources.filter(r => r.status === 'available').slice(0, sev === 'CRITICAL' ? 3 : 2);
-      available.forEach(r => { r.status = 'assigned'; r.incident = id; r.area = area; r.eta = Math.max(3, r.eta - 2); });
-      const incident = { id, title, type, severity:sev, status:'active', confidence:s.credibility, area, lat:s.lat, lng:s.lng, created:new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}), summary:`The latest ${s.source.toLowerCase()} signal was classified as ${type}. Credibility score ${percent(s.credibility)}% and urgency ${s.urgency} produced a ${sev} response.`, signals:[s.id], assigned:available.map(r=>r.id), evidence:[`${s.source} report processed`, `${percent(s.credibility)}% credibility score`, `${s.urgency.toUpperCase()} urgency tag`], recommendation:`Dispatch ${available.map(r=>r.name).join(', ') || 'nearest available responder'} and keep operator approval in the loop.` };
-      state.incidents.unshift(incident);
-      state.selectedIncident = id;
-      state.trace = [
-        { agent:'Intake Agent', status:'done', confidence:.96, output:`Accepted ${s.id}; cleaned text and coordinates.` },
-        { agent:'Credibility Agent', status:'done', confidence:s.credibility, output:`Source=${s.source}; urgency=${s.urgency}; evidence density scored.` },
-        { agent:'Classification Agent', status:'done', confidence:.88, output:`Classified threat as ${type}.` },
-        { agent:'Severity Agent', status:'done', confidence:.9, output:`Severity selected: ${sev}.` },
-        { agent:'Dispatch Agent', status:'done', confidence:.84, output:`Assigned ${available.length} available resource(s).` },
-        { agent:'Notification Agent', status:'done', confidence:.94, output:'Generated responder notification log.' }
-      ];
-      const note = { id:'NOT-' + String(state.notifications.length + 1).padStart(3,'0'), target:'Operations Desk', status:'sent', text:`${sev} ${type} incident created: ${title} at ${area}.`, time:new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) };
-      state.notifications.unshift(note);
-      state.lastDecision = `${sev} ${type}: ${area}`;
-      save(); render(); showToast('Pipeline completed', `${incident.title} created with ${percent(incident.confidence)}% confidence.`); go('analysis');
-    }
-
-    function renderIncidents(){
-      document.getElementById('incidents').innerHTML = `<div class="card"><div class="card-header"><div><h3>Incident Queue</h3><div class="sub">Click any incident to inspect AI analysis</div></div><span class="pill">${state.incidents.length} records</span></div><div class="list">${state.incidents.map(incidentCard).join('')}</div></div>`;
-    }
-
-    function renderAnalysis(){
-      const i = selectedIncident();
-      document.getElementById('analysis').innerHTML = `
-      <div class="split">
-        <div class="card"><div class="card-header"><div><h3>${iconFor(i.type)} ${i.title}</h3><div class="sub">${i.id} · ${i.area} · ${i.created}</div></div><span class="pill ${cls(i.severity)}">${i.severity}</span></div><p style="line-height:1.65">${i.summary}</p><div class="grid cols-2"><div><div class="muted">Confidence</div><div class="bar" style="margin-top:8px"><span style="width:${percent(i.confidence)}%"></span></div><strong>${percent(i.confidence)}%</strong></div><div><div class="muted">Status</div><h3 style="margin-top:8px">${i.status.toUpperCase()}</h3></div></div><hr style="border-color:var(--line); border-width:0 0 1px; margin:18px 0"><h3>Recommended Action</h3><p class="muted" style="line-height:1.6">${i.recommendation}</p><div class="actions"><button class="btn primary" onclick="go('resources')">View Assigned Resources</button><button class="btn" onclick="go('trace')">View Agent Trace</button></div></div>
-        <div class="card"><h3>Evidence</h3><div class="list" style="margin-top:14px">${i.evidence.map(e=>`<div class="item"><span>✅ ${e}</span></div>`).join('')}</div><h3 style="margin-top:20px">Linked Signals</h3><div class="list" style="margin-top:14px">${i.signals.map(id=>state.signals.find(s=>s.id===id)).filter(Boolean).map(signalCard).join('') || '<div class="muted">No linked signals.</div>'}</div></div>
-      </div>`;
-    }
-
-    function renderResources(){
-      document.getElementById('resources').innerHTML = `<div class="grid cols-3">${state.resources.map(r=>`<div class="card"><div class="card-header"><div><h3>${iconFor(r.type)} ${r.name}</h3><div class="sub">${r.id} · ${r.area}</div></div><span class="pill ${r.status==='available'?'good':r.status==='assigned'?'critical':'high'}">${r.status}</span></div><div class="item-row"><span class="muted">ETA</span><strong>${r.eta} min</strong></div><div class="item-row"><span class="muted">Incident</span><strong>${r.incident || '—'}</strong></div></div>`).join('')}</div>`;
-    }
-
-    function renderTrace(){
-      document.getElementById('trace').innerHTML = `<div class="card"><div class="card-header"><div><h3>Explainable Agent Trace</h3><div class="sub">Every decision step is deterministic and visible</div></div><span class="pill good">${state.trace.length} steps</span></div><div class="timeline">${state.trace.map(t=>`<div class="step done"><div class="item-row"><span class="item-title">${t.agent}</span><span class="pill good">${percent(t.confidence)}%</span></div><p class="muted" style="line-height:1.55">${t.output}</p></div>`).join('')}</div></div>`;
-    }
-
-    function renderSimulation(){
-      document.getElementById('simulation').innerHTML = `
-        <div class="grid cols-3"><button class="card" onclick="simulate('congestion')"><h3>🚦 Heavy congestion</h3><p class="muted">Increase ETA and add traffic police need.</p></button><button class="card" onclick="simulate('escalation')"><h3>⚠️ Escalate incident</h3><p class="muted">Raise selected incident to CRITICAL.</p></button><button class="card" onclick="simulate('false')"><h3>✅ False alarm</h3><p class="muted">Preview rollback and resource release.</p></button></div>
-        <div class="card" style="margin-top:18px"><h3>Simulation Result</h3><div class="grid cols-4" style="margin-top:14px">${metric('Scenario', state.sim.name, 'what-if mode')}${metric('Severity', state.sim.severity, 'projected')}${metric('ETA change', state.sim.etaDelta, 'against baseline')}${metric('Resources', state.sim.resourceDelta, state.sim.risk)}</div></div>`;
-    }
-    function simulate(kind){
-      if(kind==='congestion') state.sim = {name:'Heavy congestion', severity:selectedIncident().severity, etaDelta:'+7 min', resourceDelta:'+1 traffic unit', risk:'Access route delayed'};
-      if(kind==='escalation') { const i=selectedIncident(); i.severity='CRITICAL'; i.evidence.push('Simulation: risk escalated by operator'); state.sim={name:'Escalation', severity:'CRITICAL', etaDelta:'+2 min', resourceDelta:'+2 units', risk:'Needs commander approval'}; }
-      if(kind==='false') state.sim = {name:'False alarm', severity:'LOW', etaDelta:'-all', resourceDelta:'release assigned units', risk:'Rollback recommended'};
-      save(); render(); showToast('Simulation updated', state.sim.name + ' scenario applied.');
-    }
-
-    function renderRecovery(){
-      const i = selectedIncident();
-      document.getElementById('recovery').innerHTML = `<div class="card"><div class="card-header"><div><h3>Recovery / Rollback</h3><div class="sub">Selected: ${i.id} · ${i.title}</div></div><span class="pill ${cls(i.severity)}">${i.status}</span></div><p class="muted" style="line-height:1.6">Use this when the human operator confirms the incident is resolved or false. Assigned resources are automatically freed and an audit notification is logged.</p><div class="actions"><button class="btn good" onclick="resolveIncident('resolved')">Mark Resolved</button><button class="btn danger" onclick="resolveIncident('false_alarm')">Rollback as False Alarm</button></div></div>`;
-    }
-    function resolveIncident(status){
-      const i = selectedIncident();
-      i.status = status;
-      state.resources.forEach(r => { if(r.incident === i.id){ r.status = 'available'; r.incident = null; }});
-      state.notifications.unshift({id:'NOT-' + String(state.notifications.length + 1).padStart(3,'0'), target:'Operations Desk', status:'sent', text:`${i.id} marked ${status}. Assigned resources released.`, time:new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})});
-      state.lastDecision = `${i.id} ${status}; resources released`;
-      save(); render(); showToast('Recovery completed', `${i.title} marked ${status}.`);
-    }
-
-    function renderNotifications(){
-      document.getElementById('notifications').innerHTML = `<div class="card"><div class="card-header"><div><h3>Notification Audit</h3><div class="sub">Messages generated by dispatch and recovery agents</div></div><span class="pill">${state.notifications.length} logs</span></div><div class="list">${state.notifications.map(n=>`<div class="item"><div class="item-row"><span class="item-title">${n.target}</span><span class="pill good">${n.status}</span></div><div class="muted">${n.text}</div><small>${n.time} · ${n.id}</small></div>`).join('')}</div></div>`;
-    }
-
-    function renderApi(){
-      const payload = { endpoints: ['GET /incidents','GET /signals','GET /resources','POST /pipeline/run','PATCH /incidents/{id}/status','POST /recovery/{id}'], browserMode:true, statePreview:{signals:state.signals.length, incidents:state.incidents.length, resources:state.resources.length, notifications:state.notifications.length} };
-      document.getElementById('api').innerHTML = `<div class="card"><h3>API Preview</h3><p class="muted">The original repo exposes FastAPI routes. This Chrome version keeps the same mental model but stores everything in localStorage.</p><div class="codebox">${JSON.stringify(payload,null,2)}</div></div>`;
-    }
-
-    function resetDemo(){ state = baseState(); save(); render(); showToast('Demo reset', 'Original sample city state restored.'); go('dashboard'); }
-
-    render();
+    // --- Boot ---
+    renderNav();
+    checkHealth(); // start
   </script>
 </body>
 </html>
